@@ -1,0 +1,9 @@
+.maincontent{
+    min-height: 100vh;
+}
+
+.mainwrapper{
+    position: unset;
+    overflow-x: unset;
+    overflow-y: unset;
+}
