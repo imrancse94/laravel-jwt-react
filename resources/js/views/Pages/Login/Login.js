@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link ,Redirect} from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
 import ReeValidate from "ree-validate";
 import AuthService from "../../../services";
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types'
 import Page from "../../../pages/login/Page";
 
 class Login extends Component {
@@ -77,6 +78,14 @@ class Login extends Component {
     }
 
     render() {
+        const { from } = this.props.location.state || { from: { pathname: '/' } };
+        const { isAuthenticated } = this.props;
+
+        if (isAuthenticated) {
+            return (
+                <Redirect to={from}/>
+            )
+        }
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -141,6 +150,8 @@ const mapStateToProps = (state) => {
         isAuthenticated : state.Auth.isAuthenticated,
     }
 };
+
+
 
 export default connect(mapStateToProps)(Login)
 

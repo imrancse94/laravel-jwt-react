@@ -6,10 +6,10 @@ const DEFAULT_INTENDED_URL = '/home';
 
 const setLocalForageToken = token => {
   if (!token) {
-    localforage.removeItem('authtoken', token);
+      localStorage.removeItem('token', token);
   }
 
-  localforage.setItem('authtoken', token);
+    localStorage.setItem('token', token);
 };
 
 const setHttpToken = (token) => {

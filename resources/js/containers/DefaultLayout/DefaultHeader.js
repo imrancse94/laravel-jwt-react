@@ -8,8 +8,7 @@ const logo  = '/storage/img/brand/logo.svg';
 const sygnet = '/storage/img/brand/sygnet.svg';
 const cms = '/storage/img/brand/cms.svg';
 import * as actions from '../../store/actions' //logout
-import Authservices from '../../services';
-import localforage from 'localforage';
+
 
 const propTypes = {
   children: PropTypes.node,
@@ -25,7 +24,6 @@ class DefaultHeader extends Component {
 }
   handleLogout() {
     event.preventDefault();
-    //localStorage.removeItem('jwt_token')
     this.props.dispatch(actions.authLogout());
 
 }
@@ -47,7 +45,7 @@ class DefaultHeader extends Component {
             <DropdownToggle nav>
               <img src={'/storage/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
             </DropdownToggle>
-            <DropdownMenu right style={{ right: 'auto' }}>
+            <DropdownMenu right style={{ right: '0' }}>
               <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
               <DropdownItem><i className="fa fa-user"></i> <Link to={'/buttons'}>Profile</Link></DropdownItem>
               <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
@@ -55,6 +53,7 @@ class DefaultHeader extends Component {
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
+          <AppAsideToggler className="d-md-down-none" />
       </React.Fragment>
     );
   }

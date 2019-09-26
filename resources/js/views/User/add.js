@@ -98,7 +98,7 @@ class UserAdd extends Component {
 
   componentDidMount(){
      this._isMounted = true;
-     this.getUserGroupList();
+     //this.getUserGroupList();
   }
 
   componentWillUnmount(){

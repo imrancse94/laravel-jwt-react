@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import DefaultLayout from './containers/DefaultLayout';
-import AuthService from './services';
-import { initAuthFromExistingToken } from './services/authService';
+
 
 class Main extends React.Component {
 
@@ -42,7 +41,5 @@ const mapStateToProps = (state) => {
 
     }
 };
-const mapDispatchToProps = {
-  initAuthFromExistingToken
-};
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+
+export default connect(mapStateToProps)(Main);

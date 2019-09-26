@@ -2,6 +2,7 @@ import Http from '../Http'
 import * as action from '../store/actions'
 import * as API_ENDPOINT from '../apiendpoint';
 import { checkTokenExists, setToken } from '../helpers/auth';
+import {toastr} from 'react-redux-toastr';
 
 export function login(credentials) {
     return dispatch => (
@@ -11,6 +12,7 @@ export function login(credentials) {
                     const reponse = res.data;
                     if(reponse.success){
                         dispatch(action.authLogin(reponse));
+                        toastr.success('Login', 'Successfully login');
                         return resolve();
                     }
 
