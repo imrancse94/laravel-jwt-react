@@ -26,18 +26,22 @@ import ReduxToastr from 'react-redux-toastr'; //https://www.npmjs.com/package/re
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 import cookie from "js-cookie";
 import "./styles/custom.css";
-import axios from "axios";
+
 
 const jwt_secret = "DlCFWtreimaKpPtn4Bb90FRbK2uk1yvcAKLuJUz4hsVF5hAADkrYNsJT9QB0R7vZ";
 
 let token = cookie.get("token");
+
 if (token) {
     jwt.verify(token, jwt_secret, (err, decoded) => {
         if (err) {
             cookie.remove("token");
-            token = null;
+            console.log('err');
+            //token = null;
         } else {
+            console.log('else err');
             if (decoded.iss !== "http://localhost:8000/api/auth/login") {
+                console.log('else iss');
                 cookie.remove("token");
                 token = null;
             }
@@ -64,11 +68,13 @@ const render = () => {
 
 };
 if (token) {
+    console.log('refresh');
     Http.post("/api/auth/me").then(res => {
         store.dispatch(action.authLogin(res.data));
         render();
     });
 } else {
+    console.log('refresh else');
     render();
 }
 

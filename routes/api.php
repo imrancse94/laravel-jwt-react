@@ -17,6 +17,9 @@ use Illuminate\Http\Request;
     return $request->user();
 });*/
 
+Route::get('test', 'TestController@index');
+
+
 Route::group([
     'middleware' => 'api',
     'prefix'     => 'auth',

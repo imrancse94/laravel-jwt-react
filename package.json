@@ -39,6 +39,7 @@
         "prop-types": "^15.7.2",
         "react-chartjs-2": "^2.8.0",
         "react-perfect-scrollbar": "^1.5.3",
+        "react-permissions": "^1.0.5",
         "react-redux": "^7.1.1",
         "react-redux-toastr": "^7.5.1",
         "react-router-dom": "^5.0.1",

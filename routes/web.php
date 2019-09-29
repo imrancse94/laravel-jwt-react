@@ -10,5 +10,5 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('test', 'TestController@index');
 Route::view('/{path?}', 'welcome')->where('path', '.*')->name('react');
