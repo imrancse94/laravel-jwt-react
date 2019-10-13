@@ -20,7 +20,7 @@ class CreatePagesTable extends Migration
             $table->integer('submodule_id')->unsigned();
             $table->foreign('submodule_id')->references('id')->on('submodules');
             $table->string('name',50);
-            $table->string('method_name',50);
+            $table->string('route_name',50);
             $table->tinyInteger('available_to_company')->default('0');
             $table->timestamps();
         });

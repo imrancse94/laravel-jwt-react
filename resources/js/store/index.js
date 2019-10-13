@@ -14,12 +14,13 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, RootReducer);
 const middleware = [ReduxThunk];
+
 const store = createStore(
-    persistedReducer,
+    RootReducer,
     compose(
         applyMiddleware(...middleware)
-       
+
     )
 );
-persistStore(store);
+
 export default store;

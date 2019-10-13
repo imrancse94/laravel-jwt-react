@@ -24,7 +24,7 @@ Route::group([
     'middleware' => 'api',
     'prefix'     => 'auth',
 ], function ($router) {
-    Route::post('login', 'Api\AuthController@login');
+    Route::post('login', 'Api\AuthController@login')->name('user.login');
     Route::patch('update', 'Api\AuthController@update');
     Route::post('register', 'Api\AuthController@register');
     Route::post('logout', 'Api\AuthController@logout');

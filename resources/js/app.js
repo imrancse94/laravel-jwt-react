@@ -1,18 +1,3 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes React and other helpers. It's a great starting point while
- * building robust, powerful web applications using React + Laravel.
- */
-
-//require('./bootstrap');
-
-/**
- * Next, we will create a fresh React component instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-//require('./components/Example');
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import DefaultLayout from "./containers/DefaultLayout";
@@ -36,12 +21,9 @@ if (token) {
     jwt.verify(token, jwt_secret, (err, decoded) => {
         if (err) {
             cookie.remove("token");
-            console.log('err');
-            //token = null;
+            token = null;
         } else {
-            console.log('else err');
-            if (decoded.iss !== "http://localhost:8000/api/auth/login") {
-                console.log('else iss');
+            if (decoded.iss !== "http://localhost:8000/api/auth/login") {;
                 cookie.remove("token");
                 token = null;
             }
@@ -70,11 +52,10 @@ const render = () => {
 if (token) {
     console.log('refresh');
     Http.post("/api/auth/me").then(res => {
-        store.dispatch(action.authLogin(res.data));
+        store.dispatch(action.setLogin(res.data));
         render();
     });
 } else {
-    console.log('refresh else');
     render();
 }
 

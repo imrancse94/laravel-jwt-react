@@ -21,6 +21,7 @@ const PrivateRoute = ({component: Component,isAuthenticated, ...rest}) => (
 
 
 const mapStateToProps = (state) => {
+
     return {
         isAuthenticated : state.Auth.isAuthenticated,
     }

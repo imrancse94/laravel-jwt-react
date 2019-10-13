@@ -14,6 +14,7 @@ class Main extends React.Component {
 
     componentDidMount(){
       //this.props.initAuthFromExistingToken();
+
     }
     render() {
         return (
@@ -34,7 +35,6 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-
     return {
         isAuthenticated: state.Auth.isAuthenticated
 

@@ -19,6 +19,8 @@ const initialState = {
 
 const Auth = (state= initialState,{type,payload = null}) => {
     switch(type){
+        case ActionTypes.SET_LOGIN:
+            return setLogin(state,payload);
         case ActionTypes.AUTH_LOGIN:
             return authLogin(state,payload);
         case ActionTypes.AUTH_CHECK:
@@ -32,6 +34,8 @@ const Auth = (state= initialState,{type,payload = null}) => {
         default:
             return state;
     }
+
+
 };
 
 // ssadmin user add
@@ -70,6 +74,15 @@ const authLogin = (state,payload) => {
         isAdmin: localStorage.getItem('is_admin') === 'true',
         user
     });
+    return state;
+
+};
+
+const setLogin = (state,payload) => {
+    console.log('setLogin',payload);
+    const user = payload.data.user;
+    state = Object.assign({}, state, {isAuthenticated: true,user});
+
     return state;
 
 };

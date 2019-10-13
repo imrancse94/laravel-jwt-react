@@ -7,6 +7,13 @@ export function authLogin(payload){
     }
 }
 
+export function setLogin(payload){
+    return {
+        type: ActionTypes.SET_LOGIN,
+        payload
+    }
+}
+
 
 export function authLogout(){
     return {

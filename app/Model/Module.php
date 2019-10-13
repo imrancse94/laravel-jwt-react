@@ -31,37 +31,22 @@ class Module extends Model
                     )
             ->join('submodules', 'submodules.module_id', '=', 'modules.id')
             ->join('pages', 'pages.submodule_id', '=', 'submodules.id')
-            //->where('pages.id',0)
             ->get();
-//dd($modules);exit;
 
         foreach ($modules as $module){
-
-            $current_pages[$module->page_id][] = ['page_name'=>$module->page_name
-
-                                                ];
-
-            $current_submodule[$module->submodule_id][] = ['submodule_name'=>$module->controller_name
-
-                                                        ];
-            $current_module[$module->module_id][] = $module->module_name;
+            $current_pages[$module->submodule_id][] = ['page_name'=>$module->page_name];
+            $current_submodule[$module->submodule_id] = ['submodule_name'=>$module->controller_name];
+            $current_module[$module->module_id] = $module->module_name;
             $finalArray[$module->module_id][$module->submodule_id][$module->page_id] = 0;
-
         }
 
         $finalResult = [];
         foreach ($finalArray as $module_id => $final){
-            $finalResult[$module_id] = ['module_name'=>$current_module[$module_id]];
+            $finalResult[$module_id] = ['module'=>$current_module[$module_id]];
             foreach ($final as $submodule_id => $submodule){
-                $finalResult[$module_id] = ['submodule'=>$current_submodule[$submodule_id]];
-                foreach ($submodule as $page_id => $pages){
-                    $finalResult[$module_id] = ['page'=>$current_pages[$page_id]
-
-                                                ];
-                }
+                $finalResult[$module_id]['submodule'] = $current_submodule[$submodule_id];
+                $finalResult[$module_id]['submodule']['page'] = $current_pages[$submodule_id];
             }
-
-
         }
 
 

@@ -88,5 +88,9 @@ class AuthController extends BaseController
     }
 
 
+    public function refresh()
+    {
+        return $this->sendResponse($this->respondWithToken(auth()->refresh()),"Successfully refreshed token");
+    }
 
 }
