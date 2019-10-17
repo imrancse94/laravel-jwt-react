@@ -26,6 +26,7 @@ trait PermissionUpdateTreait
 					WHERE  users.id = ' . $user_id;
 
         $permissions = DB::select($sql);
+        $data = [];
         if (!empty($permissions)) {
             $modules = Module::with('submodules', 'submodules.pages')->get();
             Session::put('modules', $modules);
@@ -33,10 +34,13 @@ trait PermissionUpdateTreait
             $permittedRouteName = $this->getPermittedPageRouteName($permissions);
             Session::put('permittedRouteNames', $permittedRouteName);
             Session::put('permission_version', $permissions[0]->permission_version);
+            $data['routelist'] = $permittedRouteName;
+            $data['modulelist'] = $modules;
+            $data['permissions'] = $permissions;
         }
 
-        dd($permittedRouteName);
-        return $permissions;
+
+        return $data;
 
     }
 

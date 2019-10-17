@@ -5,9 +5,11 @@ namespace App\Repositories;
 
 use App\Model\User;
 use App\Repositories\Interfaces\UserRepositoryInterface;
-
-class UserRepository implements UserRepositoryInterface
+use App\Http\Controllers\Traits\PermissionUpdateTreait;
+class Repository implements UserRepositoryInterface
 {
+    use PermissionUpdateTreait;
+
     public function userAdd($inputData){
 
        $user =  User::create([
@@ -17,6 +19,11 @@ class UserRepository implements UserRepositoryInterface
         ]);
 
        return $user;
+    }
+
+
+    public function setPermissionByUserId($user_id){
+       return $this->getPermissionList($user_id);
     }
 
 }

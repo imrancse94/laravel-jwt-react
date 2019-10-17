@@ -4,21 +4,27 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Validator;
-use App\Repositories\UserRepository;
+use Session;
+use App\Repositories\Repository;
 
 
 class AuthController extends BaseController
 {
-    private $userRepository;
+    private $repository;
 
-    public function __construct(UserRepository $userRepository){
-        $this->userRepository = $userRepository;
+    public function __construct(Repository $userRepository){
+        $this->repository = $userRepository;
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function me()
     {
-        return $this->sendResponse(auth()->user(),'Sucessfully logged in');
+
+        $data['user'] = auth()->user();
+        $data['permission']['routelist'] = session('permittedRouteNames');
+        $data['permission']['modulelist'] = session('modules');
+        $data['permission']['permissions'] = session('user_permission');
+        return $this->sendResponse($data,'Sucessfully logged in');
     }
 
 
@@ -48,7 +54,7 @@ class AuthController extends BaseController
         }
 
         $data = $this->respondWithToken($token);
-
+        $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
        return $this->sendResponse($data,'Successfully logged in');
 
     }

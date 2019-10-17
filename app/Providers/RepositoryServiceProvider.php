@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 
-use App\Repositories\UserRepository;
+use App\Repositories\Repository;
 use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -28,7 +28,7 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             UserRepositoryInterface::class,
-            UserRepository::class
+            Repository::class
         );
     }
 }
