@@ -81,7 +81,8 @@ const authLogin = (state,payload) => {
 const setLogin = (state,payload) => {
     console.log('setLogin',payload);
     const user = payload.data.user;
-    state = Object.assign({}, state, {isAuthenticated: true,user});
+    const permissions = payload.data.permission;
+    state = Object.assign({}, state, {isAuthenticated: true,user:user,permissions:permissions});
 
     return state;
 

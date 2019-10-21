@@ -5,6 +5,7 @@ import { checkTokenExists, setToken } from '../helpers/auth';
 import {toastr} from 'react-redux-toastr';
 
 export function login(credentials) {
+
     return dispatch => (
         new Promise((resolve, reject) => {
             Http.post(API_ENDPOINT.AUTH_LOGIN_URL,credentials)

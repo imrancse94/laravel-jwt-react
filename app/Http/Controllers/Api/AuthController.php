@@ -19,11 +19,11 @@ class AuthController extends BaseController
 
     public function me()
     {
-
         $data['user'] = auth()->user();
-        $data['permission']['routelist'] = session('permittedRouteNames');
+        $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
+        /*$data['permission']['routelist'] = session('permittedRouteNames');
         $data['permission']['modulelist'] = session('modules');
-        $data['permission']['permissions'] = session('user_permission');
+        $data['permission']['permissions'] = session('user_permission');*/
         return $this->sendResponse($data,'Sucessfully logged in');
     }
 

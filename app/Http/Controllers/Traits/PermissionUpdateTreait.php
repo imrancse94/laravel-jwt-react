@@ -14,7 +14,7 @@ trait PermissionUpdateTreait
         $SUPER_SUPER_ADMIN_ID = Config::get('constants.defines.SSADMIN_ID');
         $sql = 'SELECT  users.id AS user_id,users.permission_version,pages.id AS page_id, pages.name AS page_name, 
                                  modules.id AS module_id,submodules.controller_name,submodules.name AS submodule_name, submodules.id
-                                 AS submodule_id,pages.route_name,submodules.default_method  FROM users
+                                 AS submodule_id,pages.route_name,submodules.default_method,role_pages.isIndex FROM users
 					INNER JOIN user_usergroups ON users.id = user_usergroups.user_id
 					INNER JOIN usergroups ON user_usergroups.usergroup_id = usergroups.id
 					INNER JOIN usergroup_roles ON usergroups.id = usergroup_roles.usergroup_id
@@ -29,19 +29,125 @@ trait PermissionUpdateTreait
         $data = [];
         if (!empty($permissions)) {
             $modules = Module::with('submodules', 'submodules.pages')->get();
+            $moduleSubmodulePageAssoc = $this->getOrganizePermission($modules,$permissions);
+            
             Session::put('modules', $modules);
-            Session::put('user_permission', $permissions);
+            Session::put('user_permission', $moduleSubmodulePageAssoc);
             $permittedRouteName = $this->getPermittedPageRouteName($permissions);
+            //$permittedRouteName = $this->getSideBarList($permissions);
             Session::put('permittedRouteNames', $permittedRouteName);
             Session::put('permission_version', $permissions[0]->permission_version);
-            $data['routelist'] = $permittedRouteName;
-            $data['modulelist'] = $modules;
-            $data['permissions'] = $permissions;
+            $data['routelist'] = session('permittedRouteNames');;
+            $data['modulelist'] = session('modules');
+            $data['sidebarList'] = "";
+            $data['permissions'] = session('user_permission');
         }
 
 
         return $data;
 
+    }
+
+
+    private function getOrganizePermission($modules,$permissions){
+        $result = [];
+        $sideBarList = [];
+
+        $moduleSubmodulePageAssoc = [];
+        $permittedPageIdList = [];
+        $sideBarPermittedPageIdList = [];
+        $permittedModuleIdList = [];
+        $permittedSubmoduleIdList = [];
+        foreach ($permissions as $perm){
+            if(!empty($perm)) {
+                $permittedPageIdList[] = $perm->page_id;
+                $permittedModuleIdList[] = $perm->module_id;
+                $permittedSubmoduleIdList[] = $perm->submodule_id;
+                if ($perm->isIndex == 1) {
+                    $sideBarPermittedPageIdList[] = $perm->page_id;
+                }
+            }
+        }
+
+        if(!empty($permittedModuleIdList) && is_array($permittedModuleIdList)){
+            $permittedModuleIdList = array_unique($permittedModuleIdList);
+        }
+
+        if(!empty($permittedSubmoduleIdList) && is_array($permittedSubmoduleIdList)){
+            $permittedSubmoduleIdList = array_unique($permittedSubmoduleIdList);
+        }
+
+        if(!empty($permittedPageIdList) && is_array($permittedPageIdList)){
+            $permittedPageIdList = array_unique($permittedPageIdList);
+        }
+
+        if(!empty($sideBarPermittedPageIdList) && is_array($sideBarPermittedPageIdList)){
+            $sideBarPermittedPageIdList = array_unique($sideBarPermittedPageIdList);
+        }
+
+        if(!empty($modules)){
+            foreach ($modules as $m){
+                if(in_array($m->id,$permittedModuleIdList)) {
+                    $moduleSubmodulePageAssoc[$m->id]['module_name'] = $m->name;
+                    $moduleSubmodulePageAssoc[$m->id]['icon'] = $m->icon;
+
+                    $sideBarList[$m->id]['module_name'] = $m->name;
+                    $sideBarList[$m->id]['icon'] = $m->icon;
+
+                    $pagesAssoc = [];
+                    $sideBarPagesAssoc = [];
+                    if (!empty($m->submodules)) {
+                        foreach ($m->submodules as $submodule) {
+                            if(in_array($submodule->id,$permittedSubmoduleIdList)) {
+                                $submoduleAssoc['id'] = $submodule->id;
+                                $submoduleAssoc['name'] = $submodule->controller_name;
+                                $submoduleAssoc['icon'] = $submodule->icon;
+                                $sideBarSubmodule = $submoduleAssoc;
+                                $currentpages = [];
+                                $currentSideBarpages = [];
+                                if (!empty($submodule->pages)) {
+                                    foreach ($submodule->pages as $page) {
+                                        if (in_array($page->id, $permittedPageIdList)) {
+                                            $current_page['id'] = $page->id;
+                                            $current_page['name'] = $page->name;
+                                            $current_page['route'] = $page->route_name;
+                                            $currentpages[] = $current_page;
+                                            if($page->id > 0 && in_array($page->id,$sideBarPermittedPageIdList)){
+                                                $currentSideBarpages = $current_page;
+                                            }
+                                        }
+                                    }
+
+                                    $sideBarSubmodule['pages'] = $currentSideBarpages;
+                                    $submoduleAssoc['pages'] = $currentpages;
+                                    $pagesAssoc[] = $submoduleAssoc;
+                                    $sideBarPagesAssoc[] = $sideBarSubmodule;
+                                }
+                            }
+                        }
+                        $moduleSubmodulePageAssoc[$m->id]['submodule'] = $pagesAssoc;
+                        $sideBarList[$m->id]['submodule'] = $sideBarPagesAssoc;
+                    }
+                }
+            }
+        }
+
+
+
+        $result['allpermissions'] = $moduleSubmodulePageAssoc;
+        $result['sideBarList'] = $sideBarList;
+        return $result;
+    }
+
+    private function getSideBarList($permissions)
+    {
+        $permittedRouteName = [];
+        if(!empty($permissions)) {
+            foreach ($permissions as $key => $permission) {
+                $permittedRouteName[$key] = strtolower($permission->route_name);
+            }
+        }
+        return $permittedRouteName;
     }
 
     private function getPermittedPageRouteName($permissions)

@@ -60,7 +60,11 @@ class DefaultLayout extends Component {
   }
 
   render() {
-    console.log('sidebar',this.props);
+    let current_props = this.props.permission;
+    if(current_props){
+        console.log('sidebar',current_props);
+    }
+
     return (
       <div className="app">
         <AppHeader fixed>
@@ -80,7 +84,7 @@ class DefaultLayout extends Component {
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} router={router}/>
+            <AppBreadcrumb  router={router}/>
             <Container fluid>
               <Suspense>
               <Dimmer {...this.props.children.props.isLoaging ? 'active':''}>

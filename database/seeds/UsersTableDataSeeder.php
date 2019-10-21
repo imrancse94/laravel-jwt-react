@@ -178,6 +178,28 @@ class UsersTableDataSeeder extends Seeder {
         DB::insert($usergroupRole);
         DB::insert($role_pages);
         DB::insert($userUserGroup);
+        $this->defaultMethodSet();
+    }
+
+
+    private function defaultMethodSet(){
+        $getPages = DB::select('select * from pages where route_name LIKE \'%index%\'');
+        if(!empty($getPages)){
+            $qry = "Select * from pages where id in (";
+            $idString = "";
+            foreach ($getPages as $page){
+                if($page->id > 0){
+                    \App\Models\RolePage::where('page_id',$page->id)->update(['isIndex'=>1]);
+                    if(!empty($idString)){
+                        $idString .= ",".$page->id;
+                    }else{
+                        $idString = $page->id;
+                    }
+                }
+            }
+            $qry .= $idString.");";
+
+        }
     }
 
 }
