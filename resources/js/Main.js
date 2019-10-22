@@ -35,7 +35,6 @@ class Main extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log('stateeeeee',state);
     return {
         isAuthenticated: state.Auth.isAuthenticated,
         permission:state.Auth.permissions

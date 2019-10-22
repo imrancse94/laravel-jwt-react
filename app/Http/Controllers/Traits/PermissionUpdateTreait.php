@@ -30,29 +30,23 @@ trait PermissionUpdateTreait
         if (!empty($permissions)) {
             $modules = Module::with('submodules', 'submodules.pages')->get();
             $moduleSubmodulePageAssoc = $this->getOrganizePermission($modules,$permissions);
-            
+
             Session::put('modules', $modules);
             Session::put('user_permission', $moduleSubmodulePageAssoc);
-            $permittedRouteName = $this->getPermittedPageRouteName($permissions);
-            //$permittedRouteName = $this->getSideBarList($permissions);
-            Session::put('permittedRouteNames', $permittedRouteName);
             Session::put('permission_version', $permissions[0]->permission_version);
-            $data['routelist'] = session('permittedRouteNames');;
-            $data['modulelist'] = session('modules');
-            $data['sidebarList'] = "";
-            $data['permissions'] = session('user_permission');
         }
 
 
-        return $data;
+        return $moduleSubmodulePageAssoc;
 
     }
 
 
     private function getOrganizePermission($modules,$permissions){
+
         $result = [];
         $sideBarList = [];
-
+        $permittedRouteName = $this->getPermittedPageRouteName($permissions);
         $moduleSubmodulePageAssoc = [];
         $permittedPageIdList = [];
         $sideBarPermittedPageIdList = [];
@@ -88,45 +82,49 @@ trait PermissionUpdateTreait
         if(!empty($modules)){
             foreach ($modules as $m){
                 if(in_array($m->id,$permittedModuleIdList)) {
-                    $moduleSubmodulePageAssoc[$m->id]['module_name'] = $m->name;
+                    $moduleSubmodulePageAssoc[$m->id]['name'] = $m->name;
                     $moduleSubmodulePageAssoc[$m->id]['icon'] = $m->icon;
-
-                    $sideBarList[$m->id]['module_name'] = $m->name;
+                    $moduleSubmodulePageAssoc[$m->id]['url'] = "/accesscontrol";
+                    $sideBarList[$m->id]['name'] = $m->name;
                     $sideBarList[$m->id]['icon'] = $m->icon;
+                    $sideBarList[$m->id]['url'] = $moduleSubmodulePageAssoc[$m->id]['url'];
 
                     $pagesAssoc = [];
                     $sideBarPagesAssoc = [];
                     if (!empty($m->submodules)) {
                         foreach ($m->submodules as $submodule) {
+                            //dd($submodule);
                             if(in_array($submodule->id,$permittedSubmoduleIdList)) {
                                 $submoduleAssoc['id'] = $submodule->id;
-                                $submoduleAssoc['name'] = $submodule->controller_name;
+                                $submoduleAssoc['name'] = $submodule->name;
                                 $submoduleAssoc['icon'] = $submodule->icon;
                                 $sideBarSubmodule = $submoduleAssoc;
                                 $currentpages = [];
-                                $currentSideBarpages = [];
+                                $currentSideBarpages = "";
                                 if (!empty($submodule->pages)) {
+
                                     foreach ($submodule->pages as $page) {
+
                                         if (in_array($page->id, $permittedPageIdList)) {
                                             $current_page['id'] = $page->id;
                                             $current_page['name'] = $page->name;
                                             $current_page['route'] = $page->route_name;
                                             $currentpages[] = $current_page;
                                             if($page->id > 0 && in_array($page->id,$sideBarPermittedPageIdList)){
-                                                $currentSideBarpages = $current_page;
+                                                $currentSideBarpages = $current_page['route'];
                                             }
                                         }
                                     }
 
-                                    $sideBarSubmodule['pages'] = $currentSideBarpages;
+                                    $sideBarSubmodule['url'] = $currentSideBarpages;
                                     $submoduleAssoc['pages'] = $currentpages;
                                     $pagesAssoc[] = $submoduleAssoc;
                                     $sideBarPagesAssoc[] = $sideBarSubmodule;
                                 }
                             }
                         }
-                        $moduleSubmodulePageAssoc[$m->id]['submodule'] = $pagesAssoc;
-                        $sideBarList[$m->id]['submodule'] = $sideBarPagesAssoc;
+                        $moduleSubmodulePageAssoc[$m->id]['children'] = $pagesAssoc;
+                        $sideBarList[$m->id]['children'] = $sideBarPagesAssoc;
                     }
                 }
             }
@@ -135,6 +133,7 @@ trait PermissionUpdateTreait
 
 
         $result['allpermissions'] = $moduleSubmodulePageAssoc;
+        $result['routeList'] = $permittedRouteName;
         $result['sideBarList'] = $sideBarList;
         return $result;
     }

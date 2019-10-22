@@ -60,9 +60,18 @@ class DefaultLayout extends Component {
   }
 
   render() {
-    let current_props = this.props.permission;
-    if(current_props){
-        console.log('sidebar',current_props);
+    let sideBarList = this.props.permission.sideBarList;
+    let items = [];
+    let new_assoc = {};
+    let newSidebarList = [];
+    if(sideBarList){
+        for(var i in sideBarList){
+            items.push(sideBarList[i]);
+        }
+        new_assoc = {items:items}
+        console.log('sidebar',new_assoc);
+        console.log('sidebar2',navigation);
+
     }
 
     return (
@@ -78,7 +87,7 @@ class DefaultLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-            <AppSidebarNav navConfig={navigation} {...this.props.children.props} router={router}/>
+            <AppSidebarNav navConfig={new_assoc} {...this.props.children.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
