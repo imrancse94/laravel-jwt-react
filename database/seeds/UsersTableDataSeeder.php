@@ -73,7 +73,7 @@ class UsersTableDataSeeder extends Seeder {
                         (1, 'default', '','2015-11-04 10:52:01', '2015-11-04 10:52:01'),
                         (2, 'Imran Hossain','imrancse94@gmail.com','2019-03-28 00:47:10', '2019-03-28 00:47:10');";
 
-        $pages = "INSERT INTO `pages` (`id`, `module_id`, `submodule_id`, `name`, `route_name`, `available_to_company`, `created_at`, `updated_at`) VALUES
+        $pages = "INSERT INTO `pages` (`id`, `module_id`, `submodule_id`, `name`, `route_name`, `is_default_method`, `created_at`, `updated_at`) VALUES
                     (3001, 1001, 2001, 'Company List', 'company/index', 1, '2015-12-09 22:10:51', '2019-03-27 06:03:41'),
                     (3002, 1001, 2001, 'Add New Company', 'company/create', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
                     (3003, 1001, 2001, 'Modify Company', 'company/edit', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
@@ -185,19 +185,12 @@ class UsersTableDataSeeder extends Seeder {
     private function defaultMethodSet(){
         $getPages = DB::select('select * from pages where route_name LIKE \'%index%\'');
         if(!empty($getPages)){
-            $qry = "Select * from pages where id in (";
-            $idString = "";
             foreach ($getPages as $page){
                 if($page->id > 0){
-                    \App\Models\RolePage::where('page_id',$page->id)->update(['isIndex'=>1]);
-                    if(!empty($idString)){
-                        $idString .= ",".$page->id;
-                    }else{
-                        $idString = $page->id;
-                    }
+                    \App\Models\Page::where('id',$page->id)->update(['is_default_method'=>1]);
                 }
             }
-            $qry .= $idString.");";
+
 
         }
     }

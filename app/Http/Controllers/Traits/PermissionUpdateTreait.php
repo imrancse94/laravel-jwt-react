@@ -14,7 +14,7 @@ trait PermissionUpdateTreait
         $SUPER_SUPER_ADMIN_ID = Config::get('constants.defines.SSADMIN_ID');
         $sql = 'SELECT  users.id AS user_id,users.permission_version,pages.id AS page_id, pages.name AS page_name, 
                                  modules.id AS module_id,submodules.controller_name,submodules.name AS submodule_name, submodules.id
-                                 AS submodule_id,pages.route_name,submodules.default_method,role_pages.isIndex FROM users
+                                 AS submodule_id,pages.route_name,submodules.default_method,pages.is_default_method FROM users
 					INNER JOIN user_usergroups ON users.id = user_usergroups.user_id
 					INNER JOIN usergroups ON user_usergroups.usergroup_id = usergroups.id
 					INNER JOIN usergroup_roles ON usergroups.id = usergroup_roles.usergroup_id
@@ -57,7 +57,7 @@ trait PermissionUpdateTreait
                 $permittedPageIdList[] = $perm->page_id;
                 $permittedModuleIdList[] = $perm->module_id;
                 $permittedSubmoduleIdList[] = $perm->submodule_id;
-                if ($perm->isIndex == 1) {
+                if ($perm->is_default_method == 1) {
                     $sideBarPermittedPageIdList[] = $perm->page_id;
                 }
             }

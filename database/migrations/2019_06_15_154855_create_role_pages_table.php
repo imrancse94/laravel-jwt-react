@@ -19,7 +19,6 @@ class CreateRolePagesTable extends Migration
             $table->foreign('role_id')->references('id')->on('roles');
             $table->integer('page_id')->unsigned();
             $table->foreign('page_id')->references('id')->on('pages');
-            $table->tinyInteger('isIndex')->default(0);
             $table->timestamps();
         });
     }

@@ -2,7 +2,7 @@ import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
 import { Container } from 'reactstrap';
-
+import { connect } from 'react-redux'
 import {
   Button,
   Divider,
@@ -62,15 +62,13 @@ class DefaultLayout extends Component {
   render() {
     let sideBarList = this.props.permission.sideBarList;
     let items = [];
-    let new_assoc = {};
     let newSidebarList = [];
     if(sideBarList){
         for(var i in sideBarList){
             items.push(sideBarList[i]);
         }
-        new_assoc = {items:items}
-        console.log('sidebar',new_assoc);
-        console.log('sidebar2',navigation);
+        newSidebarList = {items:items}
+
 
     }
 
@@ -87,7 +85,7 @@ class DefaultLayout extends Component {
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-            <AppSidebarNav navConfig={new_assoc} {...this.props.children.props} router={router}/>
+            <AppSidebarNav navConfig={newSidebarList} {...this.props.children.props} router={router}/>
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
@@ -119,5 +117,13 @@ class DefaultLayout extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated: state.Auth.isAuthenticated,
+        permission:state.Auth.permissions
 
-export default DefaultLayout;
+    }
+};
+
+export default connect(mapStateToProps)(DefaultLayout);
+

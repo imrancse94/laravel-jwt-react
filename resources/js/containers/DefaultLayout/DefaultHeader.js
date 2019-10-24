@@ -7,7 +7,8 @@ import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler }
 const logo  = '/storage/img/brand/logo.svg';
 const sygnet = '/storage/img/brand/sygnet.svg';
 const cms = '/storage/img/brand/cms.svg';
-import * as actions from '../../store/actions' //logout
+import * as actions from '../../store/actions'
+import AuthService from "../../services"; //logout
 
 
 const propTypes = {
@@ -24,7 +25,8 @@ class DefaultHeader extends Component {
 }
   handleLogout() {
     event.preventDefault();
-    this.props.dispatch(actions.authLogout());
+    //this.props.dispatch(actions.authLogout());
+    this.props.dispatch(AuthService.logout());
 
 }
   render() {

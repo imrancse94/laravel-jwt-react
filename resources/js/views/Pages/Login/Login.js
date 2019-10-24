@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Link ,Redirect} from 'react-router-dom';
-import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
+import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row,FormFeedback } from 'reactstrap';
 import ReeValidate from "ree-validate";
 import AuthService from "../../../services";
 import {connect} from 'react-redux';
-import PropTypes from 'prop-types'
-import Page from "../../../pages/login/Page";
+
 
 class Login extends Component {
 
@@ -103,7 +102,7 @@ class Login extends Component {
                             <i className="icon-user"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input name="email" type="text" onChange={this.handleChange} placeholder="Username" autoComplete="email" />
+                        <Input name="email" type="text"  onChange={this.handleChange} placeholder="Username" autoComplete="email" />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
