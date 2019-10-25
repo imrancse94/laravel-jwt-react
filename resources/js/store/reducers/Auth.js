@@ -66,13 +66,13 @@ const authLogin = (state,payload) => {
     console.log('authlogin',payload);
     const jwtToken = payload.data.access_token;
     const user = payload.data.user;
+    const permissions = payload.data.permission;
     setToken(jwtToken)
     Http.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
 
     state = Object.assign({}, state, {
         isAuthenticated: true,
-        isAdmin: localStorage.getItem('is_admin') === 'true',
-        user
+        user:user,permissions:permissions
     });
     return state;
 

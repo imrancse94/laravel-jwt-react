@@ -183,6 +183,7 @@ class UsersTableDataSeeder extends Seeder {
 
 
     private function defaultMethodSet(){
+        \App\Models\Page::where('id','>',0)->update(['is_default_method'=>0]);
         $getPages = DB::select('select * from pages where route_name LIKE \'%index%\'');
         if(!empty($getPages)){
             foreach ($getPages as $page){

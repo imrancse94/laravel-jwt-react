@@ -20,6 +20,12 @@ const routes = [
     },
 
     {
+        path: '/user/index',
+        exact: true,
+        auth: true,
+        component: UserList
+    },
+    {
         path: '/home',
         exact: true,
         auth: true,

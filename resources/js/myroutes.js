@@ -83,7 +83,7 @@ const myroutes = [
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/accesscontrol', exact: true, name: 'User Details', component: User },
   { path: '/accesscontrol/role-page-assoc', exact: true, name: 'User Details1', component: Tabs },
-  { path: '/user', exact: true, name: 'User List', component: UserList },
+  { path: '/user/index', exact: true, name: 'User List', component: UserList },
   { path: '/user/add', exact: true, name: 'User Add', component: UserAdd },
 ];
 
