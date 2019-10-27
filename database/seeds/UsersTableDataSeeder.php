@@ -65,7 +65,7 @@ class UsersTableDataSeeder extends Seeder {
                         (2050, 1003, 'User Management', 'UserController', '<i class=\"fa  fa-angle-double-right\"></i>', 1, '2015-12-09 22:10:49', '2015-12-09 22:10:49', 'index'),
                         (2051, 1003, 'Role Management', 'RoleController', '<i class=\"fa  fa-angle-double-right\"></i>', 2, '2015-12-09 22:10:49', '2015-12-24 00:35:45', 'index'),
                         (2052, 1003, 'User Group Management', 'UsergroupController', '<i class=\"fa  fa-angle-double-right\"></i>', 3, '2015-12-09 22:10:49', '2015-12-09 22:10:49', 'index'),
-                        (2053, 1003, 'Usergroup & Role Association', 'UsergroupRoleController', '<i class=\"fa  fa-angle-double-right\"></i>', 4, '2015-12-09 22:10:49', '2015-12-09 22:10:49', 'index'),
+                        (2053, 1003, 'Group & Role Association', 'UsergroupRoleController', '<i class=\"fa  fa-angle-double-right\"></i>', 4, '2015-12-09 22:10:49', '2015-12-09 22:10:49', 'index'),
                         (2054, 1003, 'Role & Page Association', 'RolePageController', '<i class=\"fa  fa-angle-double-right\"></i>', 5, '2015-12-09 22:10:50', '2015-12-09 22:10:50', 'index'),
                         (2070, 1004, 'Site Settings', 'SettingController', '<i class=\"fa  fa-angle-double-right\"></i>', 1, '2015-12-09 22:10:50', '2015-12-09 22:10:50', 'index');";
 
@@ -74,41 +74,41 @@ class UsersTableDataSeeder extends Seeder {
                         (2, 'Imran Hossain','imrancse94@gmail.com','2019-03-28 00:47:10', '2019-03-28 00:47:10');";
 
         $pages = "INSERT INTO `pages` (`id`, `module_id`, `submodule_id`, `name`, `route_name`, `is_default_method`, `created_at`, `updated_at`) VALUES
-                    (3001, 1001, 2001, 'Company List', 'company/index', 1, '2015-12-09 22:10:51', '2019-03-27 06:03:41'),
-                    (3002, 1001, 2001, 'Add New Company', 'company/create', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
-                    (3003, 1001, 2001, 'Modify Company', 'company/edit', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
-                    (3004, 1001, 2001, 'Delete Company', 'company/destroy', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
-                    (3005, 1001, 2001, 'View Company', 'company/show', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
-                    (3015, 1002, 2020, 'Module List', 'module/index', 0, '2015-12-09 22:10:53', '2015-12-09 22:10:53'),
-                    (3016, 1002, 2020, 'Add New Module', 'module/create', 0, '2015-12-09 22:10:53', '2015-12-09 22:10:53'),
-                    (3017, 1002, 2020, 'Modify Module', 'module/edit', 0, '2015-12-09 22:10:53', '2015-12-09 22:10:53'),
-                    (3018, 1002, 2020, 'Delete Module', 'module/destroy', 0, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
-                    (3025, 1002, 2021, 'Submodule List', 'submodule/index', 0, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
-                    (3026, 1002, 2021, 'Add New Submodule', 'submodule/create', 0, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
-                    (3027, 1002, 2021, 'Modify Submodule', 'submodule/edit', 0, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
-                    (3028, 1002, 2021, 'Delete Submodule', 'submodule/destroy', 0, '2015-12-09 22:10:55', '2015-12-09 22:10:55'),
-                    (3035, 1002, 2022, 'Page List', 'page/index', 0, '2015-12-09 22:10:55', '2015-12-09 22:10:55'),
-                    (3036, 1002, 2022, 'Add New Page', 'page/create', 0, '2015-12-09 22:10:55', '2016-01-21 20:44:25'),
-                    (3037, 1002, 2022, 'Modify Page', 'page/edit', 0, '2015-12-09 22:10:56', '2015-12-09 22:10:56'),
-                    (3038, 1002, 2022, 'Delete Page', 'page/destroy', 0, '2015-12-09 22:10:56', '2015-12-09 22:10:56'),
-                    (3045, 1003, 2050, 'User List', 'user/index', 1, '2015-12-09 22:10:56', '2015-12-09 22:10:56'),
-                    (3046, 1003, 2050, 'Add New User', 'user/create', 1, '2015-12-09 22:10:57', '2015-12-09 22:10:57'),
-                    (3047, 1003, 2050, 'Modify User', 'user/edit', 1, '2015-12-09 22:10:57', '2015-12-09 22:10:57'),
-                    (3048, 1003, 2050, 'Delete User', 'user/destroy', 1, '2015-12-09 22:10:57', '2015-12-09 22:10:57'),
-                    (3049, 1003, 2050, 'View User', 'user/view', 0, '2015-11-23 09:13:47', '2015-11-23 09:13:47'),
-                    (3055, 1003, 2051, 'Role List', 'role/index', 1, '2015-12-09 22:12:02', '2015-12-09 22:12:02'),
-                    (3056, 1003, 2051, 'Add New Role', 'role/create', 1, '2015-12-09 22:12:02', '2015-12-09 22:12:02'),
-                    (3057, 1003, 2051, 'Modify Role', 'role/edit', 1, '2015-12-09 22:12:03', '2015-12-09 22:12:03'),
-                    (3058, 1003, 2051, 'Delete Role', 'role/destroy', 1, '2015-12-09 22:12:03', '2015-12-09 22:12:03'),
-                    (3065, 1003, 2052, 'Usergroup List', 'usergroup/index', 1, '2015-12-09 22:12:03', '2015-12-09 22:12:03'),
-                    (3066, 1003, 2052, 'Add New Usergroup', 'usergroup/create', 1, '2015-12-09 22:12:04', '2015-12-09 22:12:04'),
-                    (3067, 1003, 2052, 'Modify Usergroup', 'usergroup/edit', 1, '2015-12-09 22:12:04', '2015-12-09 22:12:04'),
-                    (3068, 1003, 2052, 'Delete Usergroup', 'usergroup/destroy', 1, '2015-12-09 22:12:04', '2015-12-09 22:12:04'),
-                    (3075, 1003, 2053, 'Usergroup & Role Association', 'usergroup/role/index', 1, '2015-12-09 22:12:05', '2015-12-09 22:12:05'),
-                    (3078, 1003, 2054, 'Role & Page Association', 'role/page/index', 1, '2015-12-09 22:12:05', '2015-12-09 22:12:05'),
-                    (3081, 1004, 2070, 'Site Settings', 'site/settings/edit', 0, '2015-12-09 22:12:05', '2015-12-09 22:12:05'),
-                    (5977, 1001, 2001, 'Imran', 'imran/manageprice', 1, '2019-03-27 05:48:45', '2019-03-27 05:48:45'),
-                    (3079, 1003, 2050, 'Get Auth token', 'get/authtoken/authCheck', 1, '2015-12-09 22:12:05', '2015-12-09 22:12:05');";
+                    (3001, 1001, 2001, 'Company List', '/company', 1, '2015-12-09 22:10:51', '2019-03-27 06:03:41'),
+                    (3002, 1001, 2001, 'Add New Company', '/company/create', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
+                    (3003, 1001, 2001, 'Modify Company', '/company/edit', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
+                    (3004, 1001, 2001, 'Delete Company', '/company/destroy', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
+                    (3005, 1001, 2001, 'View Company', '/company/show', 0, '2015-12-09 22:10:52', '2015-12-09 22:10:52'),
+                    (3015, 1002, 2020, 'Module List', '/module', 1, '2015-12-09 22:10:53', '2015-12-09 22:10:53'),
+                    (3016, 1002, 2020, 'Add New Module', '/module/create', 0, '2015-12-09 22:10:53', '2015-12-09 22:10:53'),
+                    (3017, 1002, 2020, 'Modify Module', '/module/edit', 0, '2015-12-09 22:10:53', '2015-12-09 22:10:53'),
+                    (3018, 1002, 2020, 'Delete Module', '/module/destroy', 0, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
+                    (3025, 1002, 2021, 'Submodule List', '/submodule', 1, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
+                    (3026, 1002, 2021, 'Add New Submodule', '/submodule/create', 0, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
+                    (3027, 1002, 2021, 'Modify Submodule', '/submodule/edit', 0, '2015-12-09 22:10:54', '2015-12-09 22:10:54'),
+                    (3028, 1002, 2021, 'Delete Submodule', '/submodule/destroy', 0, '2015-12-09 22:10:55', '2015-12-09 22:10:55'),
+                    (3035, 1002, 2022, 'Page List', '/page', 1, '2015-12-09 22:10:55', '2015-12-09 22:10:55'),
+                    (3036, 1002, 2022, 'Add New Page', '/page/create', 0, '2015-12-09 22:10:55', '2016-01-21 20:44:25'),
+                    (3037, 1002, 2022, 'Modify Page', '/page/edit', 0, '2015-12-09 22:10:56', '2015-12-09 22:10:56'),
+                    (3038, 1002, 2022, 'Delete Page', '/page/destroy', 0, '2015-12-09 22:10:56', '2015-12-09 22:10:56'),
+                    (3045, 1003, 2050, 'User List', '/user', 1, '2015-12-09 22:10:56', '2015-12-09 22:10:56'),
+                    (3046, 1003, 2050, 'Add New User', '/user/create', 0, '2015-12-09 22:10:57', '2015-12-09 22:10:57'),
+                    (3047, 1003, 2050, 'Modify User', '/user/edit', 0, '2015-12-09 22:10:57', '2015-12-09 22:10:57'),
+                    (3048, 1003, 2050, 'Delete User', '/user/destroy', 0, '2015-12-09 22:10:57', '2015-12-09 22:10:57'),
+                    (3049, 1003, 2050, 'View User', '/user/view', 0, '2015-11-23 09:13:47', '2015-11-23 09:13:47'),
+                    (3055, 1003, 2051, 'Role List', '/role', 1, '2015-12-09 22:12:02', '2015-12-09 22:12:02'),
+                    (3056, 1003, 2051, 'Add New Role', '/role/create', 0, '2015-12-09 22:12:02', '2015-12-09 22:12:02'),
+                    (3057, 1003, 2051, 'Modify Role', '/role/edit', 0, '2015-12-09 22:12:03', '2015-12-09 22:12:03'),
+                    (3058, 1003, 2051, 'Delete Role', '/role/destroy', 0, '2015-12-09 22:12:03', '2015-12-09 22:12:03'),
+                    (3065, 1003, 2052, 'Usergroup List', '/usergroup', 1, '2015-12-09 22:12:03', '2015-12-09 22:12:03'),
+                    (3066, 1003, 2052, 'Add New Usergroup', '/usergroup/create', 0, '2015-12-09 22:12:04', '2015-12-09 22:12:04'),
+                    (3067, 1003, 2052, 'Modify Usergroup', '/usergroup/edit', 0, '2015-12-09 22:12:04', '2015-12-09 22:12:04'),
+                    (3068, 1003, 2052, 'Delete Usergroup', '/usergroup/destroy', 0, '2015-12-09 22:12:04', '2015-12-09 22:12:04'),
+                    (3075, 1003, 2053, 'Group & Role Association', '/usergrouprole', 1, '2015-12-09 22:12:05', '2015-12-09 22:12:05'),
+                    (3078, 1003, 2054, 'Role & Page Association', '/rolepageassoc', 1, '2015-12-09 22:12:05', '2015-12-09 22:12:05'),
+                    (3081, 1004, 2070, 'Site Settings', '/sitesettings', 1, '2015-12-09 22:12:05', '2015-12-09 22:12:05'),
+                    (5977, 1001, 2001, 'Imran', '/imranmanageprice', 1, '2019-03-27 05:48:45', '2019-03-27 05:48:45'),
+                    (3079, 1003, 2050, 'Get Auth token', '/getauthtoken-authCheck', 0, '2015-12-09 22:12:05', '2015-12-09 22:12:05');";
         //$pages = stripcslashes($pages);
         $roles = "INSERT INTO `roles` (`id`, `title`, `status`, `company_id`, `created_at`, `updated_at`) VALUES
                     (1, 'super-super-admin', 1, 1, '2019-03-28 07:37:17', '2019-03-28 01:37:17'),
@@ -178,22 +178,10 @@ class UsersTableDataSeeder extends Seeder {
         DB::insert($usergroupRole);
         DB::insert($role_pages);
         DB::insert($userUserGroup);
-        $this->defaultMethodSet();
+
     }
 
 
-    private function defaultMethodSet(){
-        \App\Models\Page::where('id','>',0)->update(['is_default_method'=>0]);
-        $getPages = DB::select('select * from pages where route_name LIKE \'%index%\'');
-        if(!empty($getPages)){
-            foreach ($getPages as $page){
-                if($page->id > 0){
-                    \App\Models\Page::where('id',$page->id)->update(['is_default_method'=>1]);
-                }
-            }
 
-
-        }
-    }
 
 }

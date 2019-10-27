@@ -7,20 +7,14 @@ import UserAdd from './../views/User/add';
 const routes = [
 
     {
-        path: '/user',
-        exact: true,
-        auth: true,
-        component: UserList
-    },
-    {
-        path: '/user/add',
+        path: '/user/add/',
         exact: true,
         auth: true,
         component: UserAdd
     },
 
     {
-        path: '/user/index',
+        path: '/user',
         exact: true,
         auth: true,
         component: UserList
@@ -32,16 +26,16 @@ const routes = [
         component: Dashboard
     },
     {
-        path: '/login',
-        exact: true,
-        auth: false,
-        component: Login
-    },
-    {
         path: '/register',
         exact: true,
         auth: false,
         component: Register
+    },
+    {
+        path: '/login',
+        exact: true,
+        auth: false,
+        component: Login
     },
     {
         path: '/dashboard',
@@ -51,7 +45,7 @@ const routes = [
     },
     {
         path: '',
-        exact: true,
+        exact: false,
         auth: false,
         component: NoMatch
     }

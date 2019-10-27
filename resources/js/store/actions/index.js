@@ -14,6 +14,24 @@ export function setLogin(payload){
     }
 }
 
+export function setLoader(){
+    console.log('jjjj',props)
+    return {
+        type: ActionTypes.SET_LOADER,
+
+
+    }
+}
+
+export function disableLoader(){
+    console.log('jjjj',props)
+    return {
+        type: ActionTypes.DISABLE_LOADER,
+
+    }
+}
+
+
 
 export function authLogout(){
     return {

@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter as Router,
-    Switch, Redirect
+    Switch, Redirect,HashRouter
 } from 'react-router-dom'
 import routes from './routes'
 import PublicRoute from './Public'

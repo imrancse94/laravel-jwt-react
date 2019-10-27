@@ -4,6 +4,10 @@ import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGr
 import ReeValidate from "ree-validate";
 import AuthService from "../../../services";
 import {connect} from 'react-redux';
+import store from '../../../store';
+import * as actions from '../../../store/actions';
+import PropTypes from 'prop-types';
+import Page from "../../../common/navigation/Page";
 
 
 class Login extends Component {
@@ -18,7 +22,8 @@ class Login extends Component {
         this.state = {
             credentials: {
                 email: '',
-                password: ''
+                password: '',
+                active:false
             },
             responseError: {
                 isError: false,
@@ -30,8 +35,18 @@ class Login extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
+    handleShow(){
+        this.props.dispatch(actions.setLoader())
+        console.log('sss',this.props);
+    }
+
+    handleHide(){
+        this.props.dispatch(actions.disableLoader())
+        console.log('sss',this.props);
+    }
     handleChange(event) {
         const name = event.target.name;
         const value = event.target.value;
@@ -77,14 +92,14 @@ class Login extends Component {
     }
 
     render() {
-        const { from } = this.props.location.state || { from: { pathname: '/' } };
-        const { isAuthenticated } = this.props;
-
-        if (isAuthenticated) {
-            return (
-                <Redirect to={from}/>
-            )
-        }
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { isAuthenticated } = this.props;
+    console.log('sss',isAuthenticated);
+    if (isAuthenticated) {
+        return (
+            <Redirect to={from}/>
+        )
+    }
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -150,7 +165,9 @@ const mapStateToProps = (state) => {
     }
 };
 
-
+Page.propTypes = {
+    dispatch: PropTypes.func.isRequired,
+}
 
 export default connect(mapStateToProps)(Login)
 

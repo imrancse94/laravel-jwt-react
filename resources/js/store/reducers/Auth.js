@@ -13,7 +13,7 @@ const user = {
 
 const initialState = {
     isAuthenticated : false,
-    isAdmin: false,
+    isLoading: true,
     user
 };
 
@@ -31,6 +31,10 @@ const Auth = (state= initialState,{type,payload = null}) => {
             return authuserAdd(state,payload);
         case ActionTypes.AUTH_USER_ADD_VIEW:
             return authUserAddView(state,payload);
+        case ActionTypes.SET_LOADER:
+            return setLoader(state);
+        case ActionTypes.DISABLE_LOADER:
+            return disableLoader(state);
         default:
             return state;
     }
@@ -72,27 +76,36 @@ const authLogin = (state,payload) => {
 
     state = Object.assign({}, state, {
         isAuthenticated: true,
-        user:user,permissions:permissions
+        isLoading:false,
+        user:user,
+        permissions:permissions
     });
     return state;
 
 };
 
+const  setLoader = (state) => {
+    console.log('dddd',state)
+    state = Object.assign({},state,{isAuthenticated:true,isLoading:true
+    });
+    return state;
+}
+
+const  disableLoader = (state) => {
+    return Object.assign({},state,{isAuthenticated:true,isLoading:false});
+}
 const setLogin = (state,payload) => {
-    console.log('setLogin',payload);
     const user = payload.data.user;
     const permissions = payload.data.permission;
-    state = Object.assign({}, state, {isAuthenticated: true,user:user,permissions:permissions});
-
+    state = Object.assign({}, state, {isAuthenticated:true,isLoading:false,user:user,permissions:permissions});
+    console.log('setLogin',state);
     return state;
-
 };
 
 const setLocalForageToken = token => {
-  if (!token) {
-      cookie.remove("token");
-  }
-
+      if (!token) {
+          cookie.remove("token");
+      }
     cookie.set("token", token);
 };
 

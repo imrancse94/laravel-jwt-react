@@ -68,10 +68,9 @@ class DefaultLayout extends Component {
             items.push(sideBarList[i]);
         }
         newSidebarList = {items:items}
-
-
     }
-
+      console.log('side',newSidebarList);
+      console.log('side2',navigation);
     return (
       <div className="app">
         <AppHeader fixed>
