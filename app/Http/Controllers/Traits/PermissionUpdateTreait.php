@@ -52,6 +52,7 @@ trait PermissionUpdateTreait
         $sideBarPermittedPageIdList = [];
         $permittedModuleIdList = [];
         $permittedSubmoduleIdList = [];
+        $defaultRouteList = [];
         foreach ($permissions as $perm){
             if(!empty($perm)) {
                 $permittedPageIdList[] = $perm->page_id;
@@ -59,6 +60,7 @@ trait PermissionUpdateTreait
                 $permittedSubmoduleIdList[] = $perm->submodule_id;
                 if ($perm->is_default_method == 1) {
                     $sideBarPermittedPageIdList[] = $perm->page_id;
+                    $defaultRouteList[$perm->module_id] = $perm->route_name;
                 }
             }
         }
@@ -82,9 +84,11 @@ trait PermissionUpdateTreait
         if(!empty($modules)){
             foreach ($modules as $m){
                 if(in_array($m->id,$permittedModuleIdList)) {
+                    $moduleName = strtolower(str_replace(" ","",$m->name));
                     $moduleSubmodulePageAssoc[$m->id]['name'] = $m->name;
                     $moduleSubmodulePageAssoc[$m->id]['icon'] = $m->icon;
-                    $moduleSubmodulePageAssoc[$m->id]['url'] = "/accesscontrol";
+                    $moduleSubmodulePageAssoc[$m->id]['url'] = $moduleName;
+                    $sideBarList[$m->id]['id'] = $m->id;
                     $sideBarList[$m->id]['name'] = $m->name;
                     $sideBarList[$m->id]['icon'] = $m->icon;
                     $sideBarList[$m->id]['url'] = $moduleSubmodulePageAssoc[$m->id]['url'];

@@ -1,124 +1,79 @@
-import React, { Component, Suspense } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import * as router from 'react-router-dom';
-import { Container } from 'reactstrap';
-import { connect } from 'react-redux'
-import {
-  Button,
-  Divider,
-  Dimmer,
-  Form,
-  Grid,
-  Header,
-  Icon,
-  Loader,
-  Message,
-  Segment} from 'semantic-ui-react';
-
-import {
-  AppAside,
-  AppFooter,
-  AppHeader,
-  AppSidebar,
-  AppSidebarFooter,
-  AppSidebarForm,
-  AppSidebarHeader,
-  AppSidebarMinimizer,
-  AppBreadcrumb2 as AppBreadcrumb,
-  AppSidebarNav2 as AppSidebarNav,
-} from '@coreui/react';
-// sidebar nav config
-import navigation from '../../_nav';
-// routes config
-import routes from '../../myroutes';
-// Styles
-// CoreUI Icons Set
-import '@coreui/icons/css/coreui-icons.css';
-// Import Flag Icons Set
-import 'flag-icon-css/css/flag-icon.min.css';
-// Import Font Awesome Icons Set
-import 'font-awesome/css/font-awesome.min.css';
-// Import Simple Line Icons Set
-import 'simple-line-icons/css/simple-line-icons.css';
-// Import Main styles for this application
-import '../../styles/App.scss';
-
-import DefaultAside from './DefaultAside';
-import DefaultFooter from './DefaultFooter';
-import DefaultHeader from './DefaultHeader';
-//import AppSidebarNav from './AppSidebarNav';
-// AppBreadcrumb from './Breadcrumb2'
+import React, {Component} from 'react';
+import {connect} from 'react-redux'
+import DefaultHeader from "./DefaultHeader";
+import DefaultAside from "./DefaultAside";
+import {getMainEndpoint} from '../../helpers/utils';
 
 class DefaultLayout extends Component {
 
-
-  loading () { return (<div className="animated fadeIn pt-1 text-center">Loading...</div>)}
-  //loading = () => <div className="animated fadeIn pt-1 text-center">Loading...</div>
-  signOut(e) {
-    e.preventDefault()
-    this.props.history.push('/login')
-  }
-
-  render() {
-    let sideBarList = this.props.permission.sideBarList;
-    let items = [];
-    let newSidebarList = [];
-    if(sideBarList){
-        for(var i in sideBarList){
-            items.push(sideBarList[i]);
-        }
-        newSidebarList = {items:items}
+    signOut(e) {
+        e.preventDefault()
+        this.props.history.push('/login')
     }
-      console.log('side',newSidebarList);
-      console.log('side2',navigation);
-    return (
-      <div className="app">
-        <AppHeader fixed>
-          <Suspense fallback={'Loading...'}>
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
-          </Suspense>
-        </AppHeader>
-        <div className="app-body">
-          <AppSidebar fixed display="lg">
-            <AppSidebarHeader />
-            <AppSidebarForm />
-            <Suspense>
-            <AppSidebarNav navConfig={newSidebarList} {...this.props.children.props} router={router}/>
-            </Suspense>
-            <AppSidebarFooter />
-            <AppSidebarMinimizer />
-          </AppSidebar>
-          <main className="main">
-            <AppBreadcrumb  router={router}/>
-            <Container fluid>
-              <Suspense>
-              <Dimmer {...this.props.children.props.isLoaging ? 'active':''}>
-                <Loader size='large'>Authenticating...</Loader>
-              </Dimmer>
-                {this.props.children}
-              </Suspense>
-            </Container>
-          </main>
-          <AppAside fixed>
-            <Suspense >
-              <DefaultAside />
-            </Suspense>
-          </AppAside>
-        </div>
-        <AppFooter>
-          <Suspense >
-            <DefaultFooter />
-          </Suspense>
-        </AppFooter>
-      </div>
-    );
-  }
+
+    render() {
+        let sideBarList = this.props.permission.sideBarList;
+        let data = [];
+
+        data['props'] = this.props;
+
+        let new_sidebar = [];
+        let urlSubmoduleAssoc = [];
+        let urlSubmoduleTitleAssoc = [];
+        for (var current_sidebar in sideBarList) {
+            var test = [];
+            new_sidebar[current_sidebar] = sideBarList[current_sidebar];
+            //new_sidebar.push(test);
+            for (var x in sideBarList[current_sidebar].children) {
+                urlSubmoduleAssoc[sideBarList[current_sidebar].children[x].url] = current_sidebar
+                urlSubmoduleTitleAssoc[sideBarList[current_sidebar].children[x].url] = sideBarList[current_sidebar].children[x].name
+            }
+        }
+        data['sidebar'] = new_sidebar;
+        data['urlSubmoduleAssoc'] = urlSubmoduleAssoc;
+        return (
+            <div className="wrapper">
+
+
+                <DefaultHeader/>
+
+                <DefaultAside data={data}/>
+
+                <div className="content-wrapper">
+                    <div className="content-header">
+                        <div className="container-fluid">
+                            <div className="row mb-2">
+                                <div className="col-sm-6">
+                                    <h1 className="m-0 text-dark">{urlSubmoduleTitleAssoc[getMainEndpoint(window.location.pathname)]}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {this.props.children}
+                </div>
+
+                <footer className="main-footer">
+                    <strong>Copyright &copy; 2014-2019 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+                    All rights reserved.
+                    <div className="float-right d-none d-sm-inline-block">
+                        <b>Version</b> 3.0.0
+                    </div>
+                </footer>
+
+
+                <aside className="control-sidebar control-sidebar-dark">
+
+                </aside>
+
+            </div>
+        );
+    }
 }
 
 const mapStateToProps = (state) => {
     return {
         isAuthenticated: state.Auth.isAuthenticated,
-        permission:state.Auth.permissions
+        permission: state.Auth.permissions
 
     }
 };

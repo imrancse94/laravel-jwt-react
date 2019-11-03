@@ -5,17 +5,6 @@ import { Header, Icon,  Dimmer } from 'semantic-ui-react';
 
 class Main extends React.Component {
 
-    constructor(props){
-        super(props);
-        //props.dispatch(AuthService.authchek());
-
-
-    }
-
-    componentDidMount(){
-      //this.props.initAuthFromExistingToken();
-
-    }
     render() {
         return (
 
