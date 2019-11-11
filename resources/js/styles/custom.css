@@ -1,9 +1,7 @@
-.maincontent{
-    min-height: 100vh;
+.hold-transition .content-wrapper, .hold-transition .control-sidebar, .hold-transition .control-sidebar *, .hold-transition .main-footer, .hold-transition .main-header, .hold-transition .main-sidebar, .hold-transition .main-sidebar *{
+    transition: all 0.5s !important;
 }
 
-.mainwrapper{
-    position: unset;
-    overflow-x: unset;
-    overflow-y: unset;
+.slideToggle{
+    transition: height 0.3s ease-in-out;
 }

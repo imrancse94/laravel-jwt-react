@@ -3,8 +3,8 @@ import {Nav, NavItem, NavLink, Progress, TabContent, TabPane, ListGroup, ListGro
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {getMainEndpoint} from '../../helpers/utils';
-import classNames from 'classnames';
-import $ from 'jquery';
+//import classNames from 'classnames';
+// import $ from 'jquery';
 
 const propTypes = {
     children: PropTypes.node,
@@ -21,23 +21,16 @@ class DefaultAside extends Component {
         this.state = {isSidebarOpen: 'nav-item has-treeview'};
     }
 
-    /*getMainEndpoint(endpoint){
-        var arr = endpoint.split('/');
-        return "/"+arr[1];
-    }*/
 
     toggleNavbar(e) {
         e.currentTarget.parentElement.classList.toggle('menu-open');
+        
+        
     }
 
     render() {
         const {isSidebarOpen} = this.state;
-        // eslint-disable-next-line
         const {sidebar, props, urlSubmoduleAssoc} = this.props.data;
-
-        let content = [];
-
-        //console.log('ssss',sidebar);
         let counter = 0;
 
         return (
@@ -80,7 +73,7 @@ class DefaultAside extends Component {
                                                 <i className="right fas fa-angle-left"></i>
                                             </p>
                                         </Link>
-                                        <ul key={counter++} className="nav nav-treeview">
+                                        <ul key={counter++} className="nav nav-treeview slideToggle">
                                             {
                                                 item.children.map((children_item) => {
                                                     return <li key={counter++} className={"nav-item"}>

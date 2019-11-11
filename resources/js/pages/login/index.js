@@ -20,7 +20,8 @@ import AuthService from "../../services";
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions';
 import PropTypes from 'prop-types';
-
+import {formvalidation} from "../../helpers/utils";
+import "../../styles/login.css";
 
 class Index extends Component {
 
@@ -66,6 +67,7 @@ class Index extends Component {
         const {errors} = this.validator;
         const {credentials} = this.state;
         credentials[name] = value;
+        //formvalidation(credentials);
 
         this.validator.validate(name, value)
             .then(() => {
@@ -114,50 +116,13 @@ class Index extends Component {
             )
         }
         return (
-            <div className="app flex-row align-items-center login-page">
-                <Container>
-                    <Row className="justify-content-center">
-                        <Col md="4">
-                            <CardGroup>
-                                <Card className="p-4">
-                                    <CardBody>
-                                        <Form onSubmit={this.handleSubmit}>
-                                            <h1>Login</h1>
-                                            <p className="text-muted">Sign In to your account</p>
-                                            <InputGroup className="mb-3">
-                                                <InputGroupAddon addonType="prepend">
-                                                    <InputGroupText>
-                                                        <i className="icon-user"></i>
-                                                    </InputGroupText>
-                                                </InputGroupAddon>
-                                                <Input name="email" type="text" onChange={this.handleChange}
-                                                       placeholder="Username" autoComplete="email"/>
-                                            </InputGroup>
-                                            <InputGroup className="mb-4">
-                                                <InputGroupAddon addonType="prepend">
-                                                    <InputGroupText>
-                                                        <i className="icon-lock"></i>
-                                                    </InputGroupText>
-                                                </InputGroupAddon>
-                                                <Input name="password" type="password" onChange={this.handleChange}
-                                                       placeholder="Password" autoComplete="current-password"/>
-                                            </InputGroup>
-                                            <Row>
-                                                <Col xs="6">
-                                                    <Button color="primary" className="px-4">Login</Button>
-                                                </Col>
-                                                <Col xs="6" className="text-right">
-                                                    <Button color="link" className="px-0">Forgot password?</Button>
-                                                </Col>
-                                            </Row>
-                                        </Form>
-                                    </CardBody>
-                                </Card>
-
-                            </CardGroup>
-                        </Col>
-                    </Row>
-                </Container>
+            <div className="login">
+                <h1>Login</h1>
+                <form onSubmit={this.handleSubmit}>
+                    <input onChange={this.handleChange} type="text" name="email" placeholder="Username" required="required"/>
+                    <input onChange={this.handleChange} type="password" name="password" placeholder="Password" required="required"/>
+                    <button type="submit" className="btn btn-primary btn-block btn-large">Login</button>
+                </form>
             </div>
         );
     }

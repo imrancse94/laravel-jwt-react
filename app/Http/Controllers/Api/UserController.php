@@ -22,4 +22,6 @@ class UserController extends BaseController
             return $this->sendError('User register Error',$validator->messages(),102);
         }
     }
+
+
 }

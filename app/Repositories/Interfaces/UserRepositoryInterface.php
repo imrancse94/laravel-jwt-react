@@ -7,6 +7,6 @@ interface UserRepositoryInterface
 
     public function userAdd($inputData);
 
-
+    public function getUsergroupListByUserId($id);
 
 }

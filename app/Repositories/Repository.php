@@ -26,4 +26,8 @@ class Repository implements UserRepositoryInterface
        return $this->getPermissionList($user_id);
     }
 
+    public function getUsergroupListByUserId($id)
+    {
+
+    }
 }

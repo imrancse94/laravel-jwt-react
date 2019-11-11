@@ -103,12 +103,12 @@ export function logout() {
     )
 }
 //code change
-export function userAddView() {
+export function userGroupList() {
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.get(API_ENDPOINT.AUTH_USERADD_URL)
+            Http.get(API_ENDPOINT.USER_GROUP_LIST)
                 .then(res => {
-                    dispatch(action.authUserAddView(res.data));
+                    dispatch(action.userGroupList(res.data));
                     return resolve(res.data);
                 })
                 .catch(err => {

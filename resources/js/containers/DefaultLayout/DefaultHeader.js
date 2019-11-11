@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Badge, DropdownItem, DropdownMenu, DropdownToggle, Nav, NavItem } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux'
-import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
-const logo  = '/storage/img/brand/logo.svg';
-const sygnet = '/storage/img/brand/sygnet.svg';
-const cms = '/storage/img/brand/cms.svg';
-import * as actions from '../../store/actions'
-import AuthService from "../../services"; //logout
-
+import AuthService from "../../services";
+import "../../styles/header.css";
 
 const propTypes = {
   children: PropTypes.node,
@@ -21,17 +15,64 @@ class DefaultHeader extends Component {
 
   constructor(props) {
     super(props);
+    this._isMounted = false;
+    this.setstate = this.setstate.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.toggleNavbar = this.toggleNavbar.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+    this.hideMobile = this.hideMobile.bind(this);
+    this.state = {visible:false}
+    
 }
-  handleLogout() {
+
+componentDidMount(){
+  this._isMounted = true;
+  
+}
+
+componentWillUnmount(){
+   this._isMounted = false;
+}
+
+
+setstate(obj){
+  if(this._isMounted){
+    this.setState(obj);
+  }
+}
+
+handleLogout() {
     event.preventDefault();
     //this.props.dispatch(actions.authLogout());
     this.props.dispatch(AuthService.logout());
 
 }
+
+handleOutsideClick(e) {
+
+  if (this.node.contains(e.target)) {
+    return;
+  }
+  
+  this.toggleNavbar();
+}
+
+toggleNavbar(e) {
+  if (!this.state.visible) {
+    document.addEventListener('click', this.handleOutsideClick, false);
+  } else {
+    document.removeEventListener('click', this.handleOutsideClick, false);
+  }
+  
+  this.setstate({ visible: !this.state.visible });
+}
+
+hideMobile() {
+  document.body.classList.toggle('sidebar-collapse');
+  
+}
   render() {
 
-    // eslint-disable-next-line
     const { children, ...attributes } = this.props;
 
     return (
@@ -40,132 +81,29 @@ class DefaultHeader extends Component {
 
               <ul className="navbar-nav">
                   <li className="nav-item">
-                      <a className="nav-link" data-widget="pushmenu" href="#"><i className="fas fa-bars"></i></a>
+                      <Link to={'#'} onClick={this.hideMobile} className="nav-link" data-widget="pushmenu" href="#">
+                        <i className="fas fa-bars"></i>
+                        </Link>
                   </li>
-                  <li className="nav-item d-none d-sm-inline-block">
-                      <a href="index3.html" className="nav-link">Home</a>
-                  </li>
-                  <li className="nav-item d-none d-sm-inline-block">
-                      <a href="#" className="nav-link">Contact</a>
-                  </li>
+                 
               </ul>
 
 
-              <form className="form-inline ml-3">
-                  <div className="input-group input-group-sm">
-                      <input className="form-control form-control-navbar" type="search" placeholder="Search"
-                             aria-label="Search"/>
-                      <div className="input-group-append">
-                          <button className="btn btn-navbar" type="submit">
-                              <i className="fas fa-search"></i>
-                          </button>
-                      </div>
-                  </div>
-              </form>
-
-
-              <ul className="navbar-nav ml-auto">
-
-                  <li className="nav-item dropdown">
-                      <a className="nav-link" data-toggle="dropdown" href="#">
-                          <i className="far fa-comments"></i>
-                          <span className="badge badge-danger navbar-badge">3</span>
-                      </a>
-                      <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                          <a href="#" className="dropdown-item">
-
-                              <div className="media">
-                                  <img src={'/storage/dist/img/user1-128x128.jpg'} alt="User Avatar"
-                                       className="img-size-50 mr-3 img-circle"/>
-                                  <div className="media-body">
-                                      <h3 className="dropdown-item-title">
-                                          Brad Diesel
-                                          <span className="float-right text-sm text-danger"><i
-                                              className="fas fa-star"></i></span>
-                                      </h3>
-                                      <p className="text-sm">Call me whenever you can...</p>
-                                      <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours
-                                          Ago</p>
-                                  </div>
-                              </div>
-
-                          </a>
-                          <div className="dropdown-divider"></div>
-                          <a href="#" className="dropdown-item">
-
-                              <div className="media">
-                                  <img src="/storage/dist/img/user8-128x128.jpg" alt="User Avatar"
-                                       className="img-size-50 img-circle mr-3"/>
-                                  <div className="media-body">
-                                      <h3 className="dropdown-item-title">
-                                          John Pierce
-                                          <span className="float-right text-sm text-muted"><i
-                                              className="fas fa-star"></i></span>
-                                      </h3>
-                                      <p className="text-sm">I got your message bro</p>
-                                      <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours
-                                          Ago</p>
-                                  </div>
-                              </div>
-
-                          </a>
-                          <div className="dropdown-divider"></div>
-                          <a href="#" className="dropdown-item">
-
-                              <div className="media">
-                                  <img src="/storage/dist/img/user3-128x128.jpg" alt="User Avatar"
-                                       className="img-size-50 img-circle mr-3"/>
-                                  <div className="media-body">
-                                      <h3 className="dropdown-item-title">
-                                          Nora Silvester
-                                          <span className="float-right text-sm text-warning"><i
-                                              className="fas fa-star"></i></span>
-                                      </h3>
-                                      <p className="text-sm">The subject goes here</p>
-                                      <p className="text-sm text-muted"><i className="far fa-clock mr-1"></i> 4 Hours
-                                          Ago</p>
-                                  </div>
-                              </div>
-
-                          </a>
-                          <div className="dropdown-divider"></div>
-                          <a href="#" className="dropdown-item dropdown-footer">See All Messages</a>
-                      </div>
-                  </li>
-
-                  <li className="nav-item dropdown">
-                      <a className="nav-link" data-toggle="dropdown" href="#">
-                          <i className="far fa-bell"></i>
-                          <span className="badge badge-warning navbar-badge">15</span>
-                      </a>
-                      <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                          <span className="dropdown-item dropdown-header">15 Notifications</span>
-                          <div className="dropdown-divider"></div>
-                          <a href="#" className="dropdown-item">
-                              <i className="fas fa-envelope mr-2"></i> 4 new messages
-                              <span className="float-right text-muted text-sm">3 mins</span>
-                          </a>
-                          <div className="dropdown-divider"></div>
-                          <a href="#" className="dropdown-item">
-                              <i className="fas fa-users mr-2"></i> 8 friend requests
-                              <span className="float-right text-muted text-sm">12 hours</span>
-                          </a>
-                          <div className="dropdown-divider"></div>
-                          <a href="#" className="dropdown-item">
-                              <i className="fas fa-file mr-2"></i> 3 new reports
-                              <span className="float-right text-muted text-sm">2 days</span>
-                          </a>
-                          <div className="dropdown-divider"></div>
-                          <a href="#" className="dropdown-item dropdown-footer">See All Notifications</a>
-                      </div>
-                  </li>
-                  <li className="nav-item">
-                      <a className="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
-                          <i className="fas fa-th-large"></i>
-                      </a>
-                  </li>
+        
+              <ul className="navbar-nav ml-auto navbar-right-top">
+                  <li className="nav-item dropdown nav-user">
+                    <Link to={'#'}  onClick={this.toggleNavbar} className="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <img src="/storage/img/avatars/1.jpg" alt="" className="user-avatar-md rounded-circle nav-user-img-profile"/>
+                      </Link>
+                      <div ref={node => { this.node = node; }} className={this.state.visible ? "dropdown-menu dropdown-menu-right nav-user-dropdown show":"dropdown-menu dropdown-menu-right nav-user-dropdown"} aria-labelledby="navbarDropdownMenuLink2">
+                        <Link to={'#'} className="dropdown-item" href="#"><i className="fas fa-user mr-2"></i>Account</Link>
+                        <Link to={'#'} className="dropdown-item" href="#"><i className="fas fa-cog mr-2"></i>Setting</Link>
+                        <Link to={'#'} onClick={this.handleLogout} className="dropdown-item" href="#"><i className="fas fa-power-off mr-2"></i>Logout</Link>
+                        </div>
+                      </li>
               </ul>
           </nav>
+
       </React.Fragment>
     );
   }

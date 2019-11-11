@@ -10,8 +10,7 @@ import Http from './Http';
 import ReduxToastr from 'react-redux-toastr'; //https://www.npmjs.com/package/react-redux-toastr
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 import cookie from "js-cookie";
-
-/*import "./styles/custom.css";*/
+import './styles/custom.css'
 
 
 const jwt_secret = "DlCFWtreimaKpPtn4Bb90FRbK2uk1yvcAKLuJUz4hsVF5hAADkrYNsJT9QB0R7vZ";

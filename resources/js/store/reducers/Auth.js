@@ -29,8 +29,8 @@ const Auth = (state= initialState,{type,payload = null}) => {
             return logout(state);
         case ActionTypes.AUTH_USER_ADD:
             return authuserAdd(state,payload);
-        case ActionTypes.AUTH_USER_ADD_VIEW:
-            return authUserAddView(state,payload);
+        case ActionTypes.USER_GROUP_LIST:
+            return getUserGroupList(state,payload);
         case ActionTypes.SET_LOADER:
             return setLoader(state);
         case ActionTypes.DISABLE_LOADER:
@@ -55,7 +55,7 @@ const authuserAdd = (state,payload) => {
     return state;
 }
 
-const authUserAddView = (state,payload) => {
+const getUserGroupList = (state,payload) => {
 
     const flashMessage = payload.message;
     const status = payload.success;

@@ -54,6 +54,7 @@
         "ree-validate": "^3.0.2",
         "scss-loader": "0.0.1",
         "semantic-ui-react": "^0.88.1",
-        "simple-line-icons": "^2.4.1"
+        "simple-line-icons": "^2.4.1",
+        "validator": "^12.0.0"
     }
 }

@@ -52,9 +52,9 @@ export function authuserAdd(payload){
     }
 }
 
-export function authUserAddView(payload){
+export function userGroupList(payload){
     return {
-        type:ActionTypes.AUTH_USER_ADD_VIEW,
+        type:ActionTypes.USER_GROUP_LIST,
         payload
     }
 }

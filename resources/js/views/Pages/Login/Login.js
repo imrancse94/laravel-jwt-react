@@ -20,6 +20,7 @@ import AuthService from "../../../services";
 import {connect} from 'react-redux';
 import store from '../../../store';
 import * as actions from '../../../store/actions';
+import {formvalidation} from '../../../helpers/utils';
 import PropTypes from 'prop-types';
 
 
@@ -77,7 +78,8 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
         const {credentials} = this.state;
-        console.log(credentials);
+
+
         this.validator.validateAll(credentials)
             .then(success => {
                 if (success) {
@@ -90,6 +92,8 @@ class Login extends Component {
     }
 
     submit(credentials) {
+        console.log('ddd',formvalidation(credentials));
+        return false;
         this.props.dispatch(AuthService.login(credentials))
             .catch(({error, statusCode}) => {
                 const responseError = {
