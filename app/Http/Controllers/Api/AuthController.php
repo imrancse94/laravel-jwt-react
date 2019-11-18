@@ -4,54 +4,45 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use Validator;
+use App\Http\Requests\Login;
 use Session;
-use App\Repositories\Repository;
-
+use App\Repository\Repository;
+use App\Http\Controllers\Traits\ApiResponseTrait;
 
 class AuthController extends BaseController
 {
+    use ApiResponseTrait;
     private $repository;
 
     public function __construct(Repository $userRepository){
         $this->repository = $userRepository;
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        //$this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     public function me()
     {
         $data['user'] = auth()->user();
         $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
-        return $this->sendResponse($data,'Sucessfully logged in');
+        return $this->sendApiResponse(true,'Sucessfully logged in',$data,config('apiconstants.API_LOGIN_SUCCESS'));
     }
 
 
     public function logout()
     {
         auth()->logout();
-        return $this->sendResponse([],'Sucessfully logged out');
+        return $this->sendApiResponse(true,'Sucessfully logged out',[],config('apiconstants.API_LOGIN_SUCCESS'));
     }
 
-    public function login(Request $request){
-
-
-        $validator = Validator::make($request->all(),[
-            'email'   => 'required',
-            'password'=> 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->sendError('Login Error',$validator->messages(),102);
-        }
+    public function login(Login $request){
 
         $credentials = request(['email', 'password']);
-
-        if (!$token = auth()->attempt($credentials)) {
-            return $this->sendError('Invalid username or password',[],103);
+        $status = false;
+        if ($token = auth()->attempt($credentials)) {
+            $data = $this->respondWithToken($token);
+            $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
+            $status = true;
         }
-
-        $data = $this->respondWithToken($token);
-        $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
-       return $this->sendResponse($data,'Successfully logged in');
+        return $this->sendApiResponse($status,'Sucessfully logged in',$data,config('apiconstants.API_LOGIN_SUCCESS'));
 
     }
 

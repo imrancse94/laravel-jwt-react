@@ -1,20 +1,21 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Usergroup\UsergroupInterface as UsergroupInterface;
+use App\Repository\Repository as Repository;
 
 class UsergroupController extends BaseController
 {
-    function __construct(UsergroupInterface $usergroup)
+    private $repository;
+
+    function __construct(Repository $repository)
     {
-        $this->usergroup = $usergroup;
+        $this->repository = $repository;
+
     }
 
     public function getUserGroupList(){
-       $usergroupList =  $this->usergroup->getAll();
-       dd($usergroupList);
+       $usergroupList =  $this->repository->getUserGroupList();
+       return $this->sendApiResponse(true,"Successfully get list",$usergroupList,config('apiconstants.API_LOGIN_SUCCESS'));
     }
 }

@@ -3,10 +3,12 @@
 namespace App\Exceptions;
 
 use Exception;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use App\Http\Controllers\Traits\ApiResponseTrait;
 class Handler extends ExceptionHandler
 {
+    use ApiResponseTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -46,6 +48,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        /*if ($exception instanceof Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+            $message = "Unauthentication";
+            $this->sendApiResponse(false, $message, [], config('apiconstants.API_TOKEN_VALIDATION'));
+        }*/
         return parent::render($request, $exception);
     }
 }

@@ -96,6 +96,7 @@ const  disableLoader = (state) => {
 }
 const setLogin = (state,payload) => {
     const user = payload.data.user;
+
     const permissions = payload.data.permission;
     state = Object.assign({}, state, {isAuthenticated:true,isLoading:false,user:user,permissions:permissions});
     console.log('setLogin',state);

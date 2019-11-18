@@ -4,43 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Http\Controllers\Traits\ApiResponseTrait;
 class BaseController extends Controller
 {
-    public function sendResponse($result, $message)
-    {
-        $response = [
-            'success' => true,
-            'data'    => $result,
-            'errorcode'=>"",
-            'message' => $message,
-        ];
+    use ApiResponseTrait;
 
-
-        return response()->json($response, 200);
-    }
-
-
-    /**
-     * return error response.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function sendError($error, $errorMessages = [], $code)
-    {
-        $response = [
-            'success' => false,
-            'message' => $error,
-            'errorcode'=>$code
-        ];
-
-
-        if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
-        }
-
-
-        return response()->json($response, 200);
-    }
 
 }

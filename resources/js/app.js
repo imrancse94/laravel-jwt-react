@@ -13,7 +13,7 @@ import cookie from "js-cookie";
 import './styles/custom.css'
 
 
-const jwt_secret = "DlCFWtreimaKpPtn4Bb90FRbK2uk1yvcAKLuJUz4hsVF5hAADkrYNsJT9QB0R7vZ";
+const jwt_secret = "q51JgMf3m4w8n2ZlDMcRYy8PwbHpDx0cJaZHUtfWpNnueKs53ykTDLXcjZFAyosW";
 
 let token = cookie.get("token");
 

@@ -1,0 +1,9 @@
+<?php
+
+return [
+    'API_LOGIN_SUCCESS'=>100,
+    'API_LOGIN_FAILED'=>1,
+    'API_VALIDATION_FAILED'=>2,
+    'API_TOKEN_VALIDATION'=>3,
+    'API_USERGROUPLIST_SUCCESS'=>4,
+];

@@ -19,12 +19,14 @@ use Illuminate\Http\Request;
 
 Route::get('test', 'TestController@index');
 
+Route::group(['prefix'     => 'auth',], function ($router) {
+    Route::post('login', 'Api\AuthController@login')->name('user.login');
+});
 
 Route::group([
-    'middleware' => 'api',
+    'middleware' => ['auth:api'],
     'prefix'     => 'auth',
 ], function ($router) {
-    Route::post('login', 'Api\AuthController@login')->name('user.login');
     Route::patch('update', 'Api\AuthController@update');
     Route::post('register', 'Api\AuthController@register');
     Route::post('logout', 'Api\AuthController@logout');
@@ -32,5 +34,7 @@ Route::group([
     Route::post('me', 'Api\AuthController@me');
     Route::post('user/add', 'Api\UserController@userAdd');
     Route::get('usergrouplist', 'Api\UsergroupController@getUserGroupList');
+
 });
+
 

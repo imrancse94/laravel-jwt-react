@@ -22,12 +22,12 @@ class DefaultHeader extends Component {
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
     this.hideMobile = this.hideMobile.bind(this);
     this.state = {visible:false}
-    
+
 }
 
 componentDidMount(){
   this._isMounted = true;
-  
+
 }
 
 componentWillUnmount(){
@@ -50,10 +50,10 @@ handleLogout() {
 
 handleOutsideClick(e) {
 
-  if (this.node.contains(e.target)) {
+  if (this.node && this.node.contains(e.target)) {
     return;
   }
-  
+
   this.toggleNavbar();
 }
 
@@ -63,13 +63,13 @@ toggleNavbar(e) {
   } else {
     document.removeEventListener('click', this.handleOutsideClick, false);
   }
-  
+
   this.setstate({ visible: !this.state.visible });
 }
 
 hideMobile() {
   document.body.classList.toggle('sidebar-collapse');
-  
+
 }
   render() {
 
@@ -85,11 +85,11 @@ hideMobile() {
                         <i className="fas fa-bars"></i>
                         </Link>
                   </li>
-                 
+
               </ul>
 
 
-        
+
               <ul className="navbar-nav ml-auto navbar-right-top">
                   <li className="nav-item dropdown nav-user">
                     <Link to={'#'}  onClick={this.toggleNavbar} className="nav-link nav-user-img" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
