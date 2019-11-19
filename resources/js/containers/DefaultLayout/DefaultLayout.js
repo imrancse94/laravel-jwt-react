@@ -49,7 +49,12 @@ class DefaultLayout extends Component {
                             </div>
                         </div>
                     </div>
-                    {this.props.children}
+                    <section className="content">
+                        <div className="container-fluid">
+                            {this.props.children}
+                        </div>
+                    </section>
+
                 </div>
 
                 <footer className="main-footer">

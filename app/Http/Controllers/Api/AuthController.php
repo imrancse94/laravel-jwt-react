@@ -16,7 +16,7 @@ class AuthController extends BaseController
 
     public function __construct(Repository $userRepository){
         $this->repository = $userRepository;
-        //$this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('jwt.auth', ['except' => ['login', 'register']]);
     }
 
     public function me()

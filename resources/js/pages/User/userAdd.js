@@ -14,12 +14,12 @@ class UserAdd extends Component {
             hasTarget: true,
         });
         this.validator = new ReeValidate({
-            name:'required',
-            language:'required',
+            name: 'required',
+            language: 'required',
             email: 'required|email',
             password: 'required|min:8',
             password_confirmation: 'required|min:8',
-            usergroup_id:'required'
+            usergroup_id: 'required'
         });
 
 
@@ -27,15 +27,15 @@ class UserAdd extends Component {
             dropdownOpen: false,
             radioSelected: 2,
             inputData: {
-                name:'',
+                name: '',
                 email: '',
                 password: '',
-                language:'',
-                password_confirmation:'',
-                usergroup_id:''
+                language: '',
+                password_confirmation: '',
+                usergroup_id: ''
             },
-            responseError:'',
-            usergroupList:'',
+            responseError: '',
+            usergroupList: '',
             isLoading: false,
             errors: this.validator.errors
         };
@@ -43,22 +43,22 @@ class UserAdd extends Component {
         this.setstate = this.setstate.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.setErrorMessage = this.setErrorMessage.bind(this);
+        // this.setErrorMessage = this.setErrorMessage.bind(this);
 
     }
 
-    setstate(obj){
-        if(this._isMounted){
+    setstate(obj) {
+        if (this._isMounted) {
             this.setState(obj);
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this._isMounted = true;
 
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this._isMounted = false;
     }
 
@@ -67,10 +67,10 @@ class UserAdd extends Component {
         let usergroupList = [];
 
         this.props.dispatch(AuthService.userGroupList())
-            .then(({success, data}) =>{
-                if(success){
+            .then(({success, data}) => {
+                if (success) {
                     usergroupList = data.map((usergroup) => {
-                        return <option  key={usergroup.id} value={usergroup.id}>{usergroup.name}</option>;
+                        return <option key={usergroup.id} value={usergroup.id}>{usergroup.name}</option>;
                     });
                     this.setstate({usergroupList});
                 }
@@ -114,7 +114,7 @@ class UserAdd extends Component {
                         isLoading: true
                     });
                     this.submit(inputData);
-                }else{
+                } else {
                     const errors = this.validator.errors;
                     this.setstate({errors});
                 }
@@ -125,7 +125,7 @@ class UserAdd extends Component {
     handleChange(event) {
         const name = event.target.name;
         const value = event.target.value;
-        const { errors } = this.validator;
+        const {errors} = this.validator;
         const {inputData} = this.state;
         inputData[name] = value;
 
@@ -139,162 +139,51 @@ class UserAdd extends Component {
     render() {
         return (
             <div>
-                <section className="content">
-                    <div className="container-fluid">
-                        <div className="card card-warning">
-                            <div className="card-header">
-                                <h3 className="card-title">General Elements</h3>
-                            </div>
-                            <div className="card-body">
-                                <form role="form">
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <label>Text</label>
-                                                <input type="text" className="form-control is-valid" placeholder="Enter ..."/>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <label>Text Disabled</label>
-                                                <input type="text" className="form-control" placeholder="Enter ..."
-                                                       />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <label>Textarea</label>
-                                                <textarea className="form-control" rows="3"
-                                                          placeholder="Enter ..."></textarea>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <label>Textarea Disabled</label>
-                                                <textarea className="form-control" rows="3" placeholder="Enter ..."
-                                                          disabled></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="col-form-label" htmlFor="inputSuccess"><i
-                                            className="fas fa-check"></i> Input with
-                                            success</label>
-                                        <input type="text" className="form-control is-valid" id="inputSuccess"
-                                               placeholder="Enter ..."/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="col-form-label" htmlFor="inputWarning"><i
-                                            className="far fa-bell"></i> Input with
-                                            warning</label>
-                                        <input type="text" className="form-control is-warning" id="inputWarning"
-                                               placeholder="Enter ..."/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="col-form-label" htmlFor="inputError"><i
-                                            className="far fa-times-circle"></i> Input with
-                                            error</label>
-                                        <input type="text" className="form-control is-invalid" id="inputError"
-                                               placeholder="Enter ..."/>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-
-                                            <div className="form-group">
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox"/>
-                                                    <label className="form-check-label">Checkbox</label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" defaultChecked/>
-                                                    <label className="form-check-label">Checkbox checked</label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="checkbox" disabled/>
-                                                    <label className="form-check-label">Checkbox disabled</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6">
-
-                                            <div className="form-group">
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="radio1"/>
-                                                    <label className="form-check-label">Radio</label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="radio" name="radio1"
-                                                           defaultChecked/>
-                                                    <label className="form-check-label">Radio checked</label>
-                                                </div>
-                                                <div className="form-check">
-                                                    <input className="form-check-input" type="radio" disabled/>
-                                                    <label className="form-check-label">Radio disabled</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-
-                                            <div className="form-group">
-                                                <label>Select</label>
-                                                <select className="form-control">
-                                                    <option>option 1</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <label>Select Disabled</label>
-                                                <select className="form-control" disabled>
-                                                    <option>option 1</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-sm-6">
-
-                                            <div className="form-group">
-                                                <label>Select Multiple</label>
-                                                <select multiple className="form-control">
-                                                    <option>option 1</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <div className="form-group">
-                                                <label>Select Multiple Disabled</label>
-                                                <select multiple className="form-control" disabled>
-                                                    <option>option 1</option>
-                                                    <option>option 2</option>
-                                                    <option>option 3</option>
-                                                    <option>option 4</option>
-                                                    <option>option 5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                <div className="card card-warning">
+                    <div className="card-header">
+                        <h3 className="card-title">General Elements</h3>
                     </div>
-                </section>
+                    <div className="card-body">
+                        <form role="form">
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    <div className="form-group">
+                                        <label>Text</label>
+                                        <input type="text" className="form-control is-valid" placeholder="Enter ..."/>
+                                    </div>
+                                </div>
+                                <div className="col-sm-6">
+                                    <div className="form-group">
+                                        <label>Text Disabled</label>
+                                        <input type="text" className="form-control" placeholder="Enter ..."
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-sm-6">
+
+                                    <div className="form-group">
+                                        <label>Select Multiple</label>
+                                        <select className="form-control">
+                                            <option>option 1</option>
+                                            <option>option 2</option>
+                                            <option>option 3</option>
+                                            <option>option 4</option>
+                                            <option>option 5</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div className="col-sm-6">
+                                    <div className="form-group">
+                                        <label>Text</label>
+                                        <input type="text" className="form-control is-valid" placeholder="Enter ..."/>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         );
     }

@@ -2,7 +2,7 @@ import Login from './../pages/login'
 import Register from './../views/Pages/Register'
 import NoMatch from './../views/Pages/Page404'
 import Dashboard from './../pages/Home';
-import UserList from './../views/User';
+import UserList from './../pages/User';
 import UserAdd from './../pages/User/userAdd';
 const routes = [
     {

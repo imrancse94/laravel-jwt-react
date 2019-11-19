@@ -11,12 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     </head>
     <body class="hold-transition sidebar-mini layout-fixed text-sm">
-        <div id="example">
-
-        </div>
+        <div id="example"></div>
         <script src="{{asset('js/app.js')}}" ></script>
-       {{-- <script src="{{asset('js/jquery.min.js')}}"></script>
-        <script src="{{asset('js/jquery.overlayScrollbars.min.js')}}"></script>
-        <script src="{{asset('js/adminlte.js')}}"></script>--}}
     </body>
 </html>

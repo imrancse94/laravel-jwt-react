@@ -48,10 +48,25 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        /*if ($exception instanceof Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+        if ($exception instanceof UnauthorizedHttpException) {
             $message = "Unauthentication";
-            $this->sendApiResponse(false, $message, [], config('apiconstants.API_TOKEN_VALIDATION'));
-        }*/
+
+            $preException = $exception->getPrevious();
+            if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException) {
+                $message = 'TOKEN_EXPIRED';
+            } else if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException) {
+                $message = 'TOKEN_INVALID';
+            } else if ($preException instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException) {
+                $message = 'TOKEN_BLACKLISTED';
+            }
+
+            if ($exception->getMessage() === 'Token not provided') {
+                $message = 'Token not provided';
+            }
+
+            return $this->sendApiResponse(false, $message, [], config('apiconstants.API_TOKEN_VALIDATION'));
+        }
+
         return parent::render($request, $exception);
     }
 }

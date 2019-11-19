@@ -24,7 +24,7 @@ Route::group(['prefix'     => 'auth',], function ($router) {
 });
 
 Route::group([
-    'middleware' => ['auth:api'],
+    'middleware' => ['jwt.auth'],
     'prefix'     => 'auth',
 ], function ($router) {
     Route::patch('update', 'Api\AuthController@update');
