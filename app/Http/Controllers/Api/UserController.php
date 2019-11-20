@@ -2,25 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Repository\Repository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Validator;
-
+use App\Http\Requests\UserRequest;
 class UserController extends BaseController
 {
-    public function userAdd(Request $request){
-        $validator = Validator::make($request->all(),[
-            'name'   => 'required',
-            'email'=> 'required',
-            'password'=> 'required',
-            'password_confirmation'=> 'required|same:password',
-            'language'=> 'required',
-            'usergroup_id'=> 'required',
-        ]);
+    /*public function __construct(Repository $userRepository){
+        //$this->repository = $userRepository;
 
-        if ($validator->fails()) {
-            return $this->sendError('User register Error',$validator->messages(),102);
-        }
+    }*/
+    public function userAdd(UserRequest $request){
+        $inputData = $request->all();
     }
 
 
