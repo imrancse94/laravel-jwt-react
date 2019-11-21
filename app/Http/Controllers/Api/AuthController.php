@@ -37,12 +37,17 @@ class AuthController extends BaseController
 
         $credentials = request(['email', 'password']);
         $status = false;
+        $data = [];
+        $message = "User not found";
+        $statusCode = config('apiconstants.API_LOGIN_FAILED');
         if ($token = auth()->attempt($credentials)) {
             $data = $this->respondWithToken($token);
             $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
             $status = true;
+            $message = 'Sucessfully logged in';
+            $statusCode = config('apiconstants.API_LOGIN_SUCCESS');
         }
-        return $this->sendApiResponse($status,'Sucessfully logged in',$data,config('apiconstants.API_LOGIN_SUCCESS'));
+        return $this->sendApiResponse($status,$message,$data,$statusCode);
 
     }
 

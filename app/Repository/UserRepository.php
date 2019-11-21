@@ -17,4 +17,9 @@ class UserRepository extends Repository
     public function setPermissionByUserId($user_id){
         return $this->getPermissionList($user_id);
     }
+
+    public function addNewUser($inputData){
+
+        $this->model()->insertUser($inputData);
+    }
 }

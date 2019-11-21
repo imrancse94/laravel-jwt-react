@@ -9,12 +9,13 @@ use Validator;
 use App\Http\Requests\UserRequest;
 class UserController extends BaseController
 {
-    /*public function __construct(Repository $userRepository){
-        //$this->repository = $userRepository;
+    public function __construct(Repository $userRepository){
+        $this->repository = $userRepository;
 
-    }*/
+    }
     public function userAdd(UserRequest $request){
         $inputData = $request->all();
+        $this->repository->addNewUser($inputData);
     }
 
 

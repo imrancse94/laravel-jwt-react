@@ -59,6 +59,7 @@ class User extends Authenticatable implements JWTSubject
 
 
     public function insertUser($inputData){
+        echo json_encode($inputData);exit;
         $user = new User;
         $user->name = $inputData['name'];
         $user->email = $inputData['email'];
