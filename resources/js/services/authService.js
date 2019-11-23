@@ -132,7 +132,7 @@ export function userGroupList() {
 export function userAdd(inputData) {
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.post(API_ENDPOINT.AUTH_USERADD_URL,inputData)
+            Http.post(API_ENDPOINT.AUTH_USERADD,inputData)
                 .then(res => {
                     dispatch(action.authuserAdd(res.data));
                     return resolve(res.data);
@@ -149,6 +149,22 @@ export function userAdd(inputData) {
                         data.error = err.response.data.message;
                     }
                     return reject(data);
+                })
+        })
+    )
+}
+
+export function userList() {
+    return dispatch => (
+        new Promise((resolve, reject) => {
+            Http.get(API_ENDPOINT.AUTH_USERLIST)
+                .then(res => {
+                    dispatch(action.authuserList(res.data));
+                    return resolve(res.data);
+                })
+                .catch(err => {
+
+
                 })
         })
     )

@@ -12,7 +12,9 @@ class DefaultLayout extends Component {
     }
 
     render() {
-        let sideBarList = this.props.permission.sideBarList;
+        let permissionscookie = localStorage.getItem('permission');
+        permissionscookie = JSON.parse(permissionscookie);
+        let sideBarList = permissionscookie.sideBarList;
         let data = [];
 
         data['props'] = this.props;
@@ -23,7 +25,7 @@ class DefaultLayout extends Component {
         for (var current_sidebar in sideBarList) {
             var test = [];
             new_sidebar[current_sidebar] = sideBarList[current_sidebar];
-            //new_sidebar.push(test);
+
             for (var x in sideBarList[current_sidebar].children) {
                 urlSubmoduleAssoc[sideBarList[current_sidebar].children[x].url] = current_sidebar
                 urlSubmoduleTitleAssoc[sideBarList[current_sidebar].children[x].url] = sideBarList[current_sidebar].children[x].name

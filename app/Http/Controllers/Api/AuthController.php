@@ -22,7 +22,6 @@ class AuthController extends BaseController
     public function me()
     {
         $data['user'] = auth()->user();
-        $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
         return $this->sendApiResponse(true,'Sucessfully logged in',$data,config('apiconstants.API_LOGIN_SUCCESS'));
     }
 

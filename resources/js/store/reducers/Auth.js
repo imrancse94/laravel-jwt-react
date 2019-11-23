@@ -35,6 +35,8 @@ const Auth = (state= initialState,{type,payload = null}) => {
             return setLoader(state);
         case ActionTypes.DISABLE_LOADER:
             return disableLoader(state);
+        case ActionTypes.AUTH_USER_LIST:
+            return getuserList(payload);
         default:
             return state;
     }
@@ -67,11 +69,14 @@ const getUserGroupList = (state,payload) => {
     return state;
 }
 const authLogin = (state,payload) => {
-    console.log('authlogin',payload);
+
     const jwtToken = payload.data.access_token;
     const user = payload.data.user;
     const permissions = payload.data.permission;
     setToken(jwtToken)
+    console.log('authlogin',permissions);
+    localforage.setItem('permission',permissions)
+    localStorage.setItem('permission',JSON.stringify(permissions))
     Http.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
 
     state = Object.assign({}, state, {
@@ -85,7 +90,6 @@ const authLogin = (state,payload) => {
 };
 
 const  setLoader = (state) => {
-    console.log('dddd',state)
     state = Object.assign({},state,{isAuthenticated:true,isLoading:true
     });
     return state;
@@ -96,10 +100,7 @@ const  disableLoader = (state) => {
 }
 const setLogin = (state,payload) => {
     const user = payload.data.user;
-
-    const permissions = payload.data.permission;
-    state = Object.assign({}, state, {isAuthenticated:true,isLoading:false,user:user,permissions:permissions});
-    console.log('setLogin',state);
+    state = Object.assign({}, state, {isAuthenticated:true,isLoading:false,user:user});
     return state;
 };
 
@@ -123,30 +124,12 @@ export const setToken = token => {
   setHttpToken(token);
 };
 
-const checkAuth = (state,payload) =>{
 
-    if(payload){
-        if(payload.token){
-            localStorage.removeItem('jwt_token');
-            localStorage.setItem('jwt_token',payload.token);
-            setToken(payload.token);
-        }
-    }
-    state =Object.assign({},state,{
-        isAuthenticated : !!localStorage.getItem('jwt_token'),
-        isAdmin : localStorage.getItem('is_admin'),
-    });
-
-    if(state.isAuthenticated){
-        Http.defaults.headers.common['Authorization'] = `Bearer ${localStorage.getItem('jwt_token')}`;
-    }
-    return state;
-};
 
 const logout = (state) => {
 
     cookie.remove('token');
-    localStorage.setItem('is_admin',false);
+    localStorage.removeItem('permission')
     state = Object.assign({},state,{
         isAuthenticated: false,
         isAdmin : false,
@@ -155,5 +138,20 @@ const logout = (state) => {
     Http.defaults.headers.common['Authorization'] = "";
     return state;
 };
+
+const getuserList = (payload) => {
+    let state = null;
+
+    //state = Object.assign({}, payload, {isAuthenticated:true,user:payload.data});
+    return reducerResponse(payload);
+}
+
+const reducerResponse = (payload) =>{
+   let object = Object.assign({}, payload, {isAuthenticated:payload.isAuthenticated,data:payload.data});
+   return object;
+
+}
+
+
 
 export default Auth;

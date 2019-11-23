@@ -7,10 +7,10 @@ axios.defaults.headers.common['Content-Type'] = 'application/json';
 axios.defaults.headers.common['Authorization'] = `Bearer ${cookie.get('token')}`;
 axios.interceptors.response.use(
     response => {
-      if(response.data.errorcode === 401 ){
+      /*if(response.data.errorcode === 401 ){
           store.dispatch(actions.authLogout())
           store.dispatch(Authservices.logout())
-      }
+      }*/
       return response;
     },
     (error) => {

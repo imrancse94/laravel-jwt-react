@@ -20,6 +20,10 @@ class UserRepository extends Repository
 
     public function addNewUser($inputData){
 
-        $this->model()->insertUser($inputData);
+      return $this->getCurrentModel()->insertUser($inputData);
+    }
+
+    public function getUserList(){
+        return $this->getCurrentModel()->getUserList();
     }
 }

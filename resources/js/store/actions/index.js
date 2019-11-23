@@ -52,6 +52,13 @@ export function authuserAdd(payload){
     }
 }
 
+export function authuserList(payload){
+    return {
+        type:ActionTypes.AUTH_USER_LIST,
+        payload
+    }
+}
+
 export function userGroupList(payload){
     return {
         type:ActionTypes.USER_GROUP_LIST,

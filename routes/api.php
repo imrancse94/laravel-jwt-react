@@ -24,7 +24,7 @@ Route::group(['prefix'     => 'auth',], function ($router) {
 });
 
 Route::group([
-    'middleware' => ['jwt.auth'],
+    'middleware' => ['jwt.auth','developer'],
     'prefix'     => 'auth',
 ], function ($router) {
     Route::patch('update', 'Api\AuthController@update');
@@ -34,6 +34,7 @@ Route::group([
     Route::post('me', 'Api\AuthController@me');
     Route::post('user/add', 'Api\UserController@userAdd');
     Route::get('usergrouplist', 'Api\UsergroupController@getUserGroupList');
+    Route::get('userlist', 'Api\UserController@userList');
 
 });
 

@@ -16,7 +16,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','created_at',
     ];
 
     /**
@@ -25,7 +25,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token','company_id',
     ];
 
     /**
@@ -59,13 +59,19 @@ class User extends Authenticatable implements JWTSubject
 
 
     public function insertUser($inputData){
-        echo json_encode($inputData);exit;
         $user = new User;
+        $user->company_id = $inputData['company_id'];
         $user->name = $inputData['name'];
         $user->email = $inputData['email'];
         $user->password = bcrypt($inputData['password']);
         return $user->save();
 
+    }
+
+
+    public function getUserList($search = []){
+        $users = User::all();
+        return $users;
     }
 
 
