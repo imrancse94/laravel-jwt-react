@@ -59,7 +59,7 @@ export function authuserList(payload){
     }
 }
 
-export function userGroupList(payload){
+export function getUserGroupList(payload){
     return {
         type:ActionTypes.USER_GROUP_LIST,
         payload

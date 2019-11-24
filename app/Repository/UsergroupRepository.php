@@ -27,7 +27,7 @@ class UsergroupRepository extends Repository
         $usergroups = $this->all(['id','name']);
         if(!$usergroups->isEmpty()){
             foreach ($usergroups as $usergroup){
-                $usergroupList[$usergroup->id] = $usergroup->name;
+                $usergroupList[] = ['id'=>$usergroup->id,'name'=>$usergroup->name];
             }
         }
 

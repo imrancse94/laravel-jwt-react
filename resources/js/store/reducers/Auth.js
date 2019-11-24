@@ -29,14 +29,14 @@ const Auth = (state= initialState,{type,payload = null}) => {
             return logout(state);
         case ActionTypes.AUTH_USER_ADD:
             return authuserAdd(state,payload);
-        case ActionTypes.USER_GROUP_LIST:
-            return getUserGroupList(state,payload);
         case ActionTypes.SET_LOADER:
             return setLoader(state);
         case ActionTypes.DISABLE_LOADER:
             return disableLoader(state);
         case ActionTypes.AUTH_USER_LIST:
             return getuserList(payload);
+        case ActionTypes.USER_GROUP_LIST:
+            return getUserGroupList(payload);    
         default:
             return state;
     }
@@ -47,27 +47,18 @@ const Auth = (state= initialState,{type,payload = null}) => {
 // ssadmin user add
 const authuserAdd = (state,payload) => {
 
-    const flashMessage = payload.message;
+    const flashMessage = payload.description;
     const status = payload.success;
 
     state = Object.assign({}, state, {
         flash: flashMessage,
         status:status
     });
-    return state;
+    return reducerResponse(payload);
+    //return state;
 }
 
-const getUserGroupList = (state,payload) => {
 
-    const flashMessage = payload.message;
-    const status = payload.success;
-
-    state = Object.assign({}, state, {
-        flash: flashMessage,
-        status:status
-    });
-    return state;
-}
 const authLogin = (state,payload) => {
 
     const jwtToken = payload.data.access_token;
@@ -140,9 +131,6 @@ const logout = (state) => {
 };
 
 const getuserList = (payload) => {
-    let state = null;
-
-    //state = Object.assign({}, payload, {isAuthenticated:true,user:payload.data});
     return reducerResponse(payload);
 }
 
@@ -152,6 +140,12 @@ const reducerResponse = (payload) =>{
 
 }
 
+
+const getUserGroupList = (payload) =>{
+    let object = Object.assign({}, payload, {isAuthenticated:payload.isAuthenticated,userlist:payload.data});
+    return object;
+    
+}
 
 
 export default Auth;

@@ -42,31 +42,16 @@ export function login(credentials) {
     )
 }
 
-export function authchek() {
+export function getUserGroupList() {
 
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.post(API_ENDPOINT.AUTH_CHECK_URL,[])
+            Http.get(API_ENDPOINT.AUTH_USER_GROUP_LIST)
                 .then(res => {
-                    if(res.data.success){
-                        dispatch(action.authCheck(res.data));
-                    }else{
-                        dispatch(action.authLogout());
-                    }
-
+                    dispatch(action.getUserGroupList(res.data));
                     return resolve();
                 })
                 .catch(err => {
-                    logout();
-                    const statusCode = err.response.status;
-                    const data = {
-                        error: null,
-                        statusCode,
-                    };
-
-                    if (statusCode === 401 || statusCode === 422) {
-                        data.error = err.response.data.message;
-                    }
                     return reject(data);
                 })
         })
@@ -108,21 +93,12 @@ export function userGroupList() {
         new Promise((resolve, reject) => {
             Http.get(API_ENDPOINT.USER_GROUP_LIST)
                 .then(res => {
-                    dispatch(action.userGroupList(res.data));
+                    dispatch(action.getUserGroupList(res.data));
                     return resolve(res.data);
                 })
                 .catch(err => {
 
-                    const statusCode = err.response.status;
-                    const data = {
-                        error: null,
-                        statusCode,
-                    };
-                    if (statusCode === 401 || statusCode === 422) {
-                        // status 401 means unauthorized
-                        // status 422 means unprocessable entity
-                        data.error = err.response.data.message;
-                    }
+                    
                      return reject(data);
                 })
         })
@@ -278,45 +254,3 @@ export function register(credentials) {
         })
     )
 }
-
-
-export const SET_USER_DATA = 'SET_USER_DATA';
-export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
-
-const fetchUser = () => {
-  return Http.get(API_ENDPOINT.AUTH_CHECK_URL,[])
-    .then(({ data: { data } }) => Promise.resolve(data))
-    .catch(error => Promise.reject(error));
-};
-
-export const setUserData = user => ({
-  type: SET_USER_DATA,
-  user
-});
-
-export const setAuthenticated = authenticated => ({
-  type: SET_AUTHENTICATED,
-  authenticated
-});
-
-
-export const initAuthFromExistingToken = () => dispatch => {
-  console.log('initAuthFromExistingToken');
-  checkTokenExists().then(token => {
-
-    setToken(token);
-    fetchUser().then(data => {
-      dispatch(action.authCheck(data));
-      //dispatch(setAuthenticated(true));
-    //  cb();
-    }).catch(anyError => {
-
-    //  dispatch(clearAuth());
-      cb();
-    });
-  }).catch(anyError => {
-    console.log('reponse',anyError);
-    //dispatch(clearAuth());
-    //cb();
-  });
-};

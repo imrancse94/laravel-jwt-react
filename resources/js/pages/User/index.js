@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import AuthService from "../../services";
-import axios from 'axios';
 
 class Index extends Component {
 
