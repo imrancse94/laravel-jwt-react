@@ -60,7 +60,6 @@ class UserAdd extends Component {
         this._isMounted = true;
         Http.get(API_ENDPOINT.AUTH_USER_GROUP_LIST)
             .then(response => {
-                console.log('jkl',response);
                 this.setState({ userlist: response.data.data });
             })
             .catch(function (error) {
@@ -131,7 +130,22 @@ handleChange(event) {
 
 render() {
         const {errors} = this.state;
-        console.log(this.props);
+        let username = null;
+        let email = null;
+        let password = null;
+        let c_pass = null;
+        let language = null;
+        let usergroup_id = null;
+        if(this.props.data){
+            username = this.props.data.username;
+            email = this.props.data.email;
+            password = this.props.data.password;
+            c_pass = this.props.data.password_confirmation;
+            language = this.props.data.language;
+            usergroup_id = this.props.data.usergroup_id;
+            
+        }
+        
     return (
         <div>
 
@@ -146,18 +160,18 @@ render() {
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label>Username</label>
-                                    <input name={'username'} type="text" onInput={() => this.handleChange} className={this.props.data && this.props.data.name ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
+                                    <input autoComplete={'off'} name={'username'} type="text" onInput={() => this.handleChange} className={username ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
                                     <div className="invalid-feedback">
-                                        {this.props.data && this.props.data.name ? this.props.data.name:''}
+                                        {username ? username:''}
                                     </div>
                                 </div>
                             </div>
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label>Email</label>
-                                    <input name={'email'} type="email" onChange={() => this.handleChange} className={errors.has('email') ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
+                                    <input name={'email'} type="email" onChange={() => this.handleChange} className={email ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
                                     <div className="invalid-feedback">
-                                        {errors.first('email')}
+                                        {email ? email:''}
                                     </div>
                                 </div>
                             </div>
@@ -166,18 +180,18 @@ render() {
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label>Password</label>
-                                    <input name={'password'} type="password" onChange={() => this.handleChange} className={errors.has('password') ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
+                                    <input name={'password'} type="password" onChange={() => this.handleChange} className={password ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
                                     <div className="invalid-feedback">
-                                        {errors.first('password')}
+                                        {password?password:''}
                                     </div>
                                 </div>
                             </div>
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label>Confirm Password</label>
-                                    <input name={'password_confirmation'} type="password" onChange={() => this.handleChange} className={errors.has('password_confirmation') ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
+                                    <input name={'password_confirmation'} type="password" onChange={() => this.handleChange} className={c_pass ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
                                     <div className="invalid-feedback">
-                                        {errors.first('password_confirmation')}
+                                        {c_pass ? c_pass:''}
                                     </div>
                                 </div>
                             </div>
@@ -186,21 +200,21 @@ render() {
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label>User Group</label>
-                                    <select name={'usergroup_id'} onChange={() => this.handleChange} className={errors.has('usergroup_id') ? "form-control is-invalid" : 'form-control'}>
+                                    <select name={'usergroup_id'} onChange={() => this.handleChange} className={usergroup_id ? "form-control is-invalid" : 'form-control'}>
                                         <option value={''}>Please select</option>
                                         {this.userGroupList()}
                                     </select>
                                     <div className="invalid-feedback">
-                                        {errors.first('usergroup_id')}
+                                        {usergroup_id ? usergroup_id:''}
                                     </div>
                                 </div>
                             </div>
                             <div className="col-sm-6">
                                 <div className="form-group">
                                     <label>Language</label>
-                                    <input name={'language'} onChange={() => this.handleChange} type="text" value={'en'} className={errors.has('language') ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
+                                    <input name={'language'} onChange={() => this.handleChange} type="text" value={'en'} className={language ? "form-control is-invalid" : 'form-control'} placeholder="Enter ..." />
                                     <div className="invalid-feedback">
-                                        {errors.first('language')}
+                                        {language ? language:''}
                                     </div>
                                 </div>
                             </div>

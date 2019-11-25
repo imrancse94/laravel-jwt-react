@@ -111,6 +111,9 @@ export function userAdd(inputData) {
             Http.post(API_ENDPOINT.AUTH_USERADD,inputData)
                 .then(res => {
                     dispatch(action.authuserAdd(res.data));
+                    if(res.data.success){
+                        toastr.success('New User', 'Successfully added');
+                    }
                     return resolve(res.data);
                 })
                 .catch(err => {
