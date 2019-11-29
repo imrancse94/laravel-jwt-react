@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use Validator;
 use App\Http\Requests\Login;
-use Session;
 use App\Repository\Repository;
 use App\Http\Controllers\Traits\ApiResponseTrait;
+
 
 class AuthController extends BaseController
 {
@@ -21,7 +21,9 @@ class AuthController extends BaseController
 
     public function me()
     {
-        $data['user'] = auth()->user();
+        $auth_user = auth()->user();
+        $data['user'] = $auth_user;
+        $data['permission'] = $this->getAllPermissions();
         return $this->sendApiResponse(true,'Sucessfully logged in',$data,config('apiconstants.API_LOGIN_SUCCESS'));
     }
 
@@ -40,8 +42,13 @@ class AuthController extends BaseController
         $message = "User not found";
         $statusCode = config('apiconstants.API_LOGIN_FAILED');
         if ($token = auth()->attempt($credentials)) {
+            $auth_id = auth()->user()->id;
             $data = $this->respondWithToken($token);
-            $data['permission'] = $this->repository->setPermissionByUserId(auth()->user()->id);
+            $data['permission'] = $this->repository->setPermissionByUserId($auth_id);
+            $file_name = $auth_id.".json";
+            $dir = $auth_id;
+            $content = json_encode($data['permission']);
+            $this->filewrite($file_name,$dir,$content);
             $status = true;
             $message = 'Sucessfully logged in';
             $statusCode = config('apiconstants.API_LOGIN_SUCCESS');
@@ -83,6 +90,7 @@ class AuthController extends BaseController
             'user'         => auth()->user(),
         ];
     }
+
 
 
     public function refresh()

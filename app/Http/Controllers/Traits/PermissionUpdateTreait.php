@@ -217,4 +217,13 @@ trait PermissionUpdateTreait
         return $pages_arr;
     }
 
+
+    public function verifyUser($auth_id, $db_user_id){
+        $result  = false;
+        if($auth_id == $db_user_id){
+            $result  = true;
+        }
+        return $result;
+    }
+
 }
