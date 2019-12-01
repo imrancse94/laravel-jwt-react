@@ -9,6 +9,8 @@
 namespace App\Repository;
 
 
+use App\Http\Controllers\Traits\ApiResponseTrait;
+use App\Http\Controllers\Traits\FileUploadTrait;
 use App\Http\Requests\Validator;
 use App\Repository\Contract\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
@@ -17,7 +19,7 @@ use Mockery\Exception;
 use App\Http\Controllers\Traits\PermissionUpdateTreait;
 abstract class Repository implements RepositoryInterface
 {
-    use PermissionUpdateTreait;
+    use PermissionUpdateTreait,ApiResponseTrait,FileUploadTrait;
     private $registry;
     private $model;
 

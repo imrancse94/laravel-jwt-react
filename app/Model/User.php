@@ -25,7 +25,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token','company_id',
+        'password', 'remember_token'
     ];
 
     /**
@@ -69,10 +69,17 @@ class User extends Authenticatable implements JWTSubject
     }
 
 
-    public function getUserList($search = []){
-        $users = User::all();
+    public function getUserList($params = []){
+        $paginate = 1;
+        if(isset($params['page']) && !empty($params['page'])){
+            $paginate = $params['page'];
+        }
+        $users = User::paginate($paginate);
         return $users;
     }
 
+    public function userDeleteById($id){
+      return  User::where('id',$id)->delete();
+    }
 
 }

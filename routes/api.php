@@ -34,7 +34,9 @@ Route::group([
     Route::post('me', 'Api\AuthController@me');
     Route::post('user/add', 'Api\UserController@userAdd');
     Route::get('usergrouplist', 'Api\UsergroupController@getUserGroupList');
-    Route::get('userlist', 'Api\UserController@userList');
+    Route::get('userlist/{page?}', 'Api\UserController@userList');
+    Route::delete('deleteuser/{id}', 'Api\UserController@delete');
+    Route::post('addCompany', 'Api\CompanyController@addCompany');
 
 });
 

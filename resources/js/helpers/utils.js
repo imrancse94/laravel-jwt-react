@@ -9,3 +9,18 @@ export const formvalidation = (inputdata) => {
     alert(validate.email)
 }
 
+export const getQueryStringValue = (key) => {
+    const value = decodeURIComponent(
+        window.location.search.replace(
+            new RegExp(
+                '^(?:.*[&\\?]' +
+                encodeURIComponent(key).replace(/[\.\+\*]/g, '\\$&') +
+                '(?:\\=([^&]*))?)?.*$',
+                'i'
+            ),
+            '$1'
+        )
+    );
+    return value ? value : null;
+}
+

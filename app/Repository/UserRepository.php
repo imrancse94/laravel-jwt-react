@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 
+use App\Models\Company;
+
 class UserRepository extends Repository
 {
 
@@ -19,11 +21,22 @@ class UserRepository extends Repository
     }
 
     public function addNewUser($inputData){
-
       return $this->getCurrentModel()->insertUser($inputData);
     }
 
-    public function getUserList(){
-        return $this->getCurrentModel()->getUserList();
+    public function getUserList($inputData){
+        return $this->getCurrentModel()->getUserList($inputData);
+    }
+
+    public function userDeleteById($id){
+      return  $this->getCurrentModel()->userDeleteById($id);
+    }
+
+    public function processCompanyAdd($inputData){
+           $companyObj = new Company();
+           $company = $companyObj->add($inputData);
+           $inputData['username'] = $inputData['name'];
+           $inputData['company_id'] = $company->id;
+           $this->addNewUser($inputData);
     }
 }

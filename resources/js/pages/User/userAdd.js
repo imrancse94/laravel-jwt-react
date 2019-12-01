@@ -57,7 +57,6 @@ class UserAdd extends Component {
     }
 
     componentDidMount() {
-        this._isMounted = true;
         Http.get(API_ENDPOINT.AUTH_USER_GROUP_LIST)
             .then(response => {
                 this.setState({ userlist: response.data.data });
@@ -65,9 +64,9 @@ class UserAdd extends Component {
             .catch(function (error) {
                 console.log(error);
             })
-        }
+    }
 
-    
+
 
 
 
@@ -143,9 +142,9 @@ render() {
             c_pass = this.props.data.password_confirmation;
             language = this.props.data.language;
             usergroup_id = this.props.data.usergroup_id;
-            
+
         }
-        
+
     return (
         <div>
 

@@ -11,5 +11,6 @@ return [
     'API_USER_ADD_FAILED'=>6,
     'API_USER_LIST_FAILED'=>7,
     'FILE_WRITE_ERROR'=>8,
+    'USER_DELETE_FAILED'=>9,
 
 ];

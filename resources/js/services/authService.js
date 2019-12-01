@@ -133,10 +133,11 @@ export function userAdd(inputData) {
     )
 }
 
-export function userList() {
+export function userList(page) {
+   
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.get(API_ENDPOINT.AUTH_USERLIST)
+            Http.get(API_ENDPOINT.AUTH_USERLIST,{'page':page})
                 .then(res => {
                     dispatch(action.authuserList(res.data));
                     return resolve(res.data);

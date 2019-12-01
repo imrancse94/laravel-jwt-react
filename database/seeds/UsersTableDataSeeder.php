@@ -41,14 +41,22 @@ class UsersTableDataSeeder extends Seeder {
 
         // Raw data insertion start from here/////
 
-        $userTable = [
+        $userTable[] = [
+            'name' => "ssadmin",
+            'company_id'=>1,
+            'email' => "ssadmin@admin.com",
+            'permission_version' => 0,
+            'password' => bcrypt('123456'),
+            'created_at'=>\Carbon\Carbon::now()
+        ];
+        $userTable[] = [
             'name' => "Imran Hossain",
             'company_id'=>2,
             'email' => "imrancse94@gmail.com",
             'permission_version' => 0,
-            'password' => bcrypt('123456')
+            'password' => bcrypt('123456'),
+            'created_at'=>\Carbon\Carbon::now()
         ];
-
         $modules = "INSERT INTO `modules` (`id`, `name`, `icon`, `sequence`, `created_at`, `updated_at`) VALUES
                     (1001, 'Company', '<i class=\"fa fa-list-ul\"></i>', 6, '2015-12-09 22:10:46', '2019-03-21 06:52:50'),
                     (1002, 'Master Data', '<i class=\"fa fa-list-ul\"></i>', 2, '2015-12-09 22:10:46', '2019-03-27 23:03:33'),
@@ -169,7 +177,7 @@ class UsersTableDataSeeder extends Seeder {
                             (10, 2, 1, 2, '2019-03-30 05:39:26', '2019-03-30 05:39:26');";
 
         DB::insert($companies);
-        User::create($userTable);
+        User::insert($userTable);
         DB::insert($modules);
         DB::insert($submoduleSql);
         DB::insert($pages);
