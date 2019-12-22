@@ -98,7 +98,7 @@ export function userGroupList() {
                 })
                 .catch(err => {
 
-                    
+
                      return reject(data);
                 })
         })
@@ -134,10 +134,13 @@ export function userAdd(inputData) {
 }
 
 export function userList(page) {
-   
+    let url = API_ENDPOINT.AUTH_USERLIST;
+    if(page){
+      url = API_ENDPOINT.AUTH_USERLIST+"/?page="+page
+    }
     return dispatch => (
         new Promise((resolve, reject) => {
-            Http.get(API_ENDPOINT.AUTH_USERLIST,{'page':page})
+            Http.get(url)
                 .then(res => {
                     dispatch(action.authuserList(res.data));
                     return resolve(res.data);

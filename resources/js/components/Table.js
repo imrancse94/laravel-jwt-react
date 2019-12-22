@@ -14,8 +14,9 @@ class Table extends Component {
     }
 
     tabRow() {
-        if (this.props.userList instanceof Array) {
-            return this.props.userList.map(function (object, i) {
+        console.log('props.userData',this.props.userData);
+        if (this.props.userData.data instanceof Array) {
+            return this.props.userData.data.map(function (object, i) {
                 return <tr key={i}>
                     <td>{object.id}</td>
                     <td>{object.name}</td>
@@ -29,6 +30,7 @@ class Table extends Component {
 
 
     renderTableHeader() {
+        return (<th></th>);
         if (this.props.tableprops.tableheading instanceof Array) {
             return this.props.tableprops.tableheading.map(function (object, i) {
                 return <th key={i}>{object.col}</th>;
@@ -38,8 +40,10 @@ class Table extends Component {
     }
 
 
+
     render() {
         return (
+
             <table className="table table-bordered table-hover">
                 <thead>
                     <tr>

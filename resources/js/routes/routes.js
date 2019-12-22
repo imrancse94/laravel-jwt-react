@@ -25,6 +25,12 @@ const routes = [
         component: UserList
     },
     {
+        path: '/user/:page?',
+        exact: true,
+        auth: true,
+        component: UserList
+    },
+    {
         path: '/role',
         exact: true,
         auth: true,

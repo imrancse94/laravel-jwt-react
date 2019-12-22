@@ -1,48 +1,60 @@
 import React, { Component } from 'react'
 import { getQueryStringValue } from "../helpers/utils";
-import {Link} from 'react-router-dom';
+import {Link,Redirect} from 'react-router-dom';
+import * as API_ENDPOINT from "../apiendpoint";
 export class Pagination extends Component {
-    paginateList() {
-        let from = '';
-        let per_page = '';
-        let last_page = '';
-        let next_page_url = '';
-        let first_page_url = '';
-        let last_page_url = '';
-        let prev_page_url = '';
-        if(this.props.data){
-            prev_page_url = this.props.data.prev_page_url;
-            next_page_url = this.props.data.next_page_url;
-            
-        }
 
-        return {
-            prev_page_url:prev_page_url,
-            next_page_url:next_page_url
+    pagination(target,e,i=null){
+        e.preventDefault();
+        this.setState({
+            loading: true
+        });
+
+        let url;
+        switch(target){
+            case 'pre':
+                if(this.props.data.prev_page_url != null){
+                    url = API_ENDPOINT.AUTH_USERLIST+'?page='+(this.state.userData.current_page-1);
+                    this.props.getCallApi(url);
+                }
+                break;
+            case 'next':
+
+                if(this.props.data.next_page_url != null){//current_page
+                    url = API_ENDPOINT.AUTH_USERLIST+'/?page='+(this.state.userData.current_page+1);
+                    this.props.getCallApi(url);
+                }
+                break;
+            case 'btn-click':
+                url = API_ENDPOINT.AUTH_USERLIST+'?page='+i;
+
+                this.props.getCallApi(url);
+
+                break;
+
         }
+        this.setState({
+            loading: false
+        });
     }
 
     rows(){
-        
-        let pathname = window.location.pathname;
-        
         let rows = [];
-        if(this.props.data){
-            for (let i = 1; i <= this.props.data.last_page; i++) {
-                rows.push(<li className={i==this.props.data.current_page ? "page-item active":"page-item"} key={i}><Link className="page-link" to={pathname+'/?page='+i} >{i}</Link></li>);
-            }
+        for (let i = 1; i <= this.props.data.last_page; i++) {
+            rows.push(<li className="page-item" key={i}><a className="page-link" href="#" onClick={(e)=>this.pagination('btn-click',e,i)}>{i}</a></li>);
         }
+
         return rows;
     }
 
     render() {
-        
-         
+
+
         return (
-            <ul className="pagination pagination-sm m-0 float-right">
-                <li className={ this.paginateList().last_page_url ? "page-item" :'page-item disabled'}><a className="page-link" href={ this.paginateList().last_page_url ? this.paginateList().last_page_url :'#'}>«</a></li>
+            <ul className="pagination justify-content-end">
+                <li className="page-item"><a className="page-link" href="#" onClick={(e)=>this.pagination('pre',e)}>Previous</a></li>
                 {this.rows()}
-                <li className={this.paginateList().next_page_url ? "page-item":'page-item disabled'}><a className="page-link" href={this.paginateList().next_page_url ? this.paginateList().next_page_url:'#'}>»</a></li>
+                <li className="page-item"><a className="page-link" href="#" onClick={(e)=>this.pagination('next',e)}>Next</a></li>
             </ul>
         )
     }

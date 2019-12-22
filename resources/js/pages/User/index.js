@@ -1,50 +1,96 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link, Redirect} from 'react-router-dom';
 import AuthService from "../../services";
 import Table from "../../components/Table";
 import {getQueryStringValue} from '../../helpers/utils';
 import { Pagination } from "../../components/Pagination";
 
+import Http from "../../Http";
+import * as action from "../../store/actions";
+import * as API_ENDPOINT from "../../apiendpoint";
 
 class Index extends Component {
 
     constructor(props) {
+
         super(props);
-        this.state = { value: '', userList: '', table: '' };
+        this.state = {value: '', userList: '', table: '', userData: {
+                data: [],
+                from :'',
+                per_page :'',
+                last_page:'',
+                current_page:'',
+                next_page_url:'',
+                first_page_url:'',
+                last_page_url:'',
+                prev_page_url:'',
+                searchQuery:'',
+                test_type:'',
+                sortColumn:'',
+                sortOrder:'',
+                loading:true
+            },page:1};
     }
 
     componentDidMount() {
-        let page = getQueryStringValue('page');
-        if(!page){
-            page = 1;
-        }
-        
-        this.props.dispatch(AuthService.userList(page))
-            .catch(({ error, statusCode }) => {
 
-            })
-    }
-
-    tabRow() {
-
-        if (this.props.userList instanceof Array) {
-            return this.props.userList.map(function (object, i) {
-                return <tr key={i}>
-                    <td>{object.id}</td>
-                    <td>{object.name}</td>
-                    <td>{object.email}</td>
-                    <td>{object.created_at}</td>
-                </tr>;
-            })
-        }
+        this.getCallApi()
 
     }
+
+    componentWillReceiveProps(){
+        console.log('ssss',this.props)
+    }
+
+
+
+    getCallApi(url = null){
+        let page = 1;
+
+        if (!url) {
+            url = API_ENDPOINT.AUTH_USERLIST + "/?page=" + page
+        }
+
+        Http.get(url)
+            .then(res => {
+                let response = res.data.data;
+                this.setState({userData:{
+                    data: response.data,
+                    from:response.from,
+                    per_page:response.per_page,
+                    last_page:response.last_page,
+                    current_page:response.current_page,
+                    next_page_url:response.next_page_url,
+                    first_page_url:response.first_page_url,
+                    last_page_url:response.last_page_url,
+                    prev_page_url:response.prev_page_url,
+                    path:response.path,
+                    loading: false
+                }});
+
+            })
+            .catch(err => {
+
+            })
+
+    }
+
+
+    params(){
+        return {
+            page:2
+        }
+    }
+
 
 
     render() {
+        const {userData} = this.state;
+        console.log('dddd',userData)
 
 
+        console.log('userData',userData)
         return (
             <React.Fragment>
                 <div className="user-management">
@@ -60,9 +106,9 @@ class Index extends Component {
                                 <div className="card-header">
                                     <h3 className="card-title">{this.props.tableprops.tableTitle ? this.props.tableprops.tableTitle : ''}</h3>
                                     <div className="card-tools">
-                                        <div className="input-group input-group-sm" style={{ width: 150 + 'px' }}>
+                                        <div className="input-group input-group-sm" style={{width: 150 + 'px'}}>
                                             <input type="text" name="table_search" className="form-control float-right"
-                                                placeholder="Search" />
+                                                   placeholder="Search"/>
 
                                             <div className="input-group-append">
                                                 <button type="submit" className="btn btn-default"><i
@@ -72,11 +118,12 @@ class Index extends Component {
                                     </div>
                                 </div>
                                 <div className="card-body table-responsive p-0">
-                                    <Table {...this.props} />
+                                    <Table userData = {userData} />
                                 </div>
                                 <div className="card-footer clearfix">
-                                    <Pagination {...this.props.pagination}/>
+                                    <Pagination  getCallApi={this.getCallApi} data={userData} />
                                 </div>
+
                             </div>
 
 
@@ -100,7 +147,7 @@ const mapStateToProps = (state) => {
     let current_page = 1;
     let paginate = null;
     if (state.Auth.data) {
-        userlist = state.Auth.data.data;
+        userlist =  state.Auth.data.data
         current_page = state.Auth.data.current_page;
         paginate = state.Auth.data;
     }
@@ -109,19 +156,18 @@ const mapStateToProps = (state) => {
         tableprops: {
             tableTitle: "User List",
             tableheading: [
-                { col: 'ID' },
-                { col: 'Username' },
-                { col: 'Email' },
-                { col: 'Created At' },
+                {col: 'ID'},
+                {col: 'Username'},
+                {col: 'Email'},
+                {col: 'Created At'},
             ],
             current_page: current_page
         },
-        pagination:{
-            data:paginate
+        pagination: {
+            data: paginate
         }
     }
 
 };
 
 export default connect(mapStateToProps)(Index);
-

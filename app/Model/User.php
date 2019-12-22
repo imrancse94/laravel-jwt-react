@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use Illuminate\Pagination\Paginator;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -70,11 +71,16 @@ class User extends Authenticatable implements JWTSubject
 
 
     public function getUserList($params = []){
-        $paginate = 1;
+        $page_limit = 3;
+        $page_no = 1;
         if(isset($params['page']) && !empty($params['page'])){
-            $paginate = $params['page'];
+            $page_no = $params['page'];
         }
-        $users = User::paginate($paginate);
+
+        Paginator::currentPageResolver(function () use ($page_no) {
+            return $page_no;
+        });
+        $users = User::paginate($page_limit);
         return $users;
     }
 
